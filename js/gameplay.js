@@ -1,7 +1,7 @@
 let x,y,s;
 let playerX, playerY;
 let squareX, squareY, squareLength;
-let colorMonster, colorMap;
+let colorMonster, colorMap,colorObst;
 let wrongAwnser;
 
 
@@ -29,10 +29,11 @@ class Gameplay
     // colours
     colorMonster = color(255, 0, 0);
     colorMap = color(0, 0, 0);
+    colorObst = color(255,0,0);
 
     // set which is right awnser, for now just set it to one
-    wrongAwnser = 1;
-
+    wrongAwnser = random(2);
+    print(wrongAwnser)
   }
 
    keyPressed() {
@@ -41,32 +42,47 @@ class Gameplay
     if (squareLength+50 > playerY && squareLength < playerY){
 
       if (key == 'a') {
-        playerX = playerX - 50;
+        playerX = playerX - 62;
+        if (wrongAwnser <= 1) {
+          y = y - 20;
+          print('a')
+        }
       }
       if (key == 'd') {
-        playerX = playerX+ 50;
+        playerX = playerX + 62;
+        if (wrongAwnser > 1) {
+          y = y - 20;
+        }
       }
     }
 
   }
+
+
    draw() {
+     background(220);
+
+     fill(colorObst);
 
      // draw blocade and make monster come closer
-     if (squareLength == height) {
-       
-
+     if (squareLength > 400) {
+       if (wrongAwnser <= 1) {
+         rect(100,squareLength-400,100,50);
+       }
+       else {
+         rect(200,squareLength-400,100,50);
+       }
      }
 
-    background(220);
-
-    // player
-    circle(playerX,playerY,s);
-
     fill(colorMonster);
+
     // monster
     circle(playerX,y,s);
 
     fill(colorMap);
+
+    // player
+    circle(playerX,playerY,s);
 
     // move obstacle
     squareLength = squareLength + 1;
