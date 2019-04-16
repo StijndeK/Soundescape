@@ -54,7 +54,7 @@ class Gameplay
 
     fill(colorMonster);
     // monster
-    circle(x,y,s);
+    circle(playerX,y,s);
 
     fill(colorMap);
 
