@@ -2,15 +2,16 @@
 class SampleClass
 {
   // Constructor
-  constructor(x, y, size = 50)
+  constructor(x, y, size, collisionSound)
   {
     // Variable declarations go here
     this.x = x;
     this.y = y;
     this.size = size;
+    this.collisionSound = collisionSound;
 
-    this.vx = 5;
-    this.vy = 5;
+    this.vx = random(-5, 5);
+    this.vy = random(-5, 5);
   }
 
   // Draw function
@@ -18,21 +19,31 @@ class SampleClass
   draw()
   {
     // Check if the circle is outside of the window
-    if (this.vx < 0 && this.x < 0)
+    if (this.vx < 0 && this.x - this.size / 2 < 0) {
       this.vx *= -1;
-    if (this.vx > 0 && this.x + this.size >= windowWidth)
+      this.collisionSound.play();
+    }
+    if (this.vx > 0 && this.x + this.size / 2 >= windowWidth) {
       this.vx *= -1;
+      this.collisionSound.play();
+    }
 
-    if (this.vy < 0 && this.y < 0)
+    if (this.vy < 0 && this.y - this.size / 2 < 0) {
       this.vy *= -1;
-    if (this.vy > 0 && this.y + this.size >= windowHeight)
+      this.collisionSound.play();
+    }
+    if (this.vy > 0 && this.y + this.size / 2 >= windowHeight) {
       this.vy *= -1;
+      this.collisionSound.play();
+    }
 
     // Move the circle
     this.x += this.vx;
     this.y += this.vy;
 
     // Draw the circle
-    ellipse(this.x, this.y, this.size, this.size);
+    fill(255);
+    noStroke();
+    circle(this.x, this.y, this.size);
   }
 }
