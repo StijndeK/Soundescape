@@ -1,0 +1,4 @@
+/* Remove margin from the page */
+html, body {
+  margin: 0;
+}
