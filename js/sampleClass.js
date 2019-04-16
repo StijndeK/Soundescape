@@ -38,8 +38,8 @@ class SampleClass
     }
 
     // Move the circle
-    this.x += this.vx;
-    this.y += this.vy;
+    // this.x += this.vx;
+    // this.y += this.vy;
 
     // Draw the circle
     fill(255);
