@@ -1,6 +1,7 @@
 // Variable declarations preferably with "let", not with "var"
 let sample;
 let mySound;
+let game;
 
 // Preload function
 function preload()
@@ -19,10 +20,21 @@ function setup()
   createCanvas(windowWidth, windowHeight);
 
   // Create a new sample class that draws an ellipse
-  sample = new SampleClass(100, 100, 50, mySound);
+  // sample = new SampleClass(100, 100, 50, mySound);
+
+  // create new gameplay class
+  game = new gameplay
+
+  game.setup();
 
   // Background
   background(0);
+}
+
+// keypressed function
+function keyPressed() {
+  game.keyPressed();
+
 }
 
 // Draw function
@@ -34,7 +46,12 @@ function draw()
   rect(0, 0, windowWidth, windowHeight);
 
   // Draw the sample class
-  sample.draw();
+  // sample.draw();
+
+
+  game.draw();
+
+
 }
 
 // Resize function
