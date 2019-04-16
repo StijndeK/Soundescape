@@ -2,6 +2,7 @@ let x,y,s;
 let playerX, playerY;
 let squareX, squareY, squareLength;
 let colorMonster, colorMap;
+let wrongAwnser;
 
 
 class Gameplay
@@ -29,6 +30,9 @@ class Gameplay
     colorMonster = color(255, 0, 0);
     colorMap = color(0, 0, 0);
 
+    // set which is right awnser, for now just set it to one
+    wrongAwnser = 1;
+
   }
 
    keyPressed() {
@@ -46,6 +50,12 @@ class Gameplay
 
   }
    draw() {
+
+     // draw blocade and make monster come closer
+     if (squareLength == height) {
+       
+
+     }
 
     background(220);
 
