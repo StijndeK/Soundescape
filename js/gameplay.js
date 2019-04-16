@@ -1,23 +1,29 @@
+let x,y,s;
+let playerX, playerY;
+let squareX, squareY, squareLength;
+let colorMonster, colorMap;
 
-class gameplay{
 
+class Gameplay
+{
+  constructor(){}
 
-  function setup() {
+   setup() {
     createCanvas(400, 400);
 
     // monster parameters
-    x = width / 2
-    y = height - 20
+    x = width / 2;
+    y = height - 20;
     s = 10;
 
     // player parameters
-    playerX = x
-    playerY = height - 60
+    playerX = x;
+    playerY = height - 60;
 
     // Obstacle parameters
-    squareX = width / 2 - 25
-    squareY = 0
-    squareLength = 50
+    squareX = width / 2 - 25;
+    squareY = 0;
+    squareLength = 50;
 
     // colours
     colorMonster = color(255, 0, 0);
@@ -25,22 +31,21 @@ class gameplay{
 
   }
 
-  function keyPressed() {
+   keyPressed() {
 
     // check if movement is possible
     if (squareLength+50 > playerY && squareLength < playerY){
 
       if (key == 'a') {
-        playerX = playerX - 50
+        playerX = playerX - 50;
       }
       if (key == 'd') {
-        playerX = playerX+ 50
+        playerX = playerX+ 50;
       }
     }
 
   }
-
-  function draw() {
+   draw() {
 
     background(220);
 
@@ -54,18 +59,18 @@ class gameplay{
     fill(colorMap);
 
     // move obstacle
-    squareLength = squareLength + 1
+    squareLength = squareLength + 1;
 
     // draw obstacle
-    rect(squareX,squareY,50,squareLength)
+    rect(squareX,squareY,50,squareLength);
 
     // draw lanes
-    rect(250,squareLength + 50,50, 400 - squareLength)
-    rect(100,squareLength + 50,50, 400 - squareLength)
+    rect(250,squareLength + 50,50, 400 - squareLength);
+    rect(100,squareLength + 50,50, 400 - squareLength);
 
     // draw borders
-    rect(0,0,100,400)
-    rect(width-100,0,100,400)
+    rect(0,0,100,400);
+    rect(width-100,0,100,400);
 
   }
 

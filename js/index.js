@@ -9,8 +9,8 @@ function preload()
   soundFormats('wav', 'mp3');
 
   // Load the sound
-  mySound = loadSound('assets/blop.wav');
-  mySound.setVolume(1.0);
+  // mySound = loadSound('assets/blop.wav');
+  // mySound.setVolume(1.0);
 }
 
 // Setup function
@@ -23,7 +23,7 @@ function setup()
   // sample = new SampleClass(100, 100, 50, mySound);
 
   // create new gameplay class
-  game = new gameplay
+  game = new Gameplay();
 
   game.setup();
 
@@ -41,9 +41,9 @@ function keyPressed() {
 function draw()
 {
   // Draw the background
-  fill('rgba(0, 0, 0, 0.2)');
-  noStroke();
-  rect(0, 0, windowWidth, windowHeight);
+  // fill('rgba(0, 0, 0, 0.2)');
+  // noStroke();
+  // rect(0, 0, windowWidth, windowHeight);
 
   // Draw the sample class
   // sample.draw();
