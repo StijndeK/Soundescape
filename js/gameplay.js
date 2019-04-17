@@ -29,7 +29,7 @@ class Gameplay
   keyPressed()
   {
     // check if movement is possible
-    if (this.squareLength+50 > this.playerY && this.squareLength < this.playerY){
+    if (this.squareLength+100 > this.playerY && this.squareLength < this.playerY){
       if (key == 'a') {
         this.playerX = this.playerX - width/8;
         if (this.wrongAwnser <= 1) {
