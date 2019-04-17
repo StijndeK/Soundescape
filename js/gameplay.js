@@ -4,14 +4,11 @@ let squareX, squareY, squareLength;
 let colorMonster, colorMap,colorObst;
 let wrongAwnser;
 
-
 class Gameplay
 {
   constructor(){}
 
    setup() {
-    // createCanvas(400, 400);
-
     // monster parameters
     x = width / 2;
     y = height - 20;
@@ -37,10 +34,8 @@ class Gameplay
   }
 
    keyPressed() {
-
     // check if movement is possible
     if (squareLength+50 > playerY && squareLength < playerY){
-
       if (key == 'a') {
         playerX = playerX - width/8;
         if (wrongAwnser <= 1) {
@@ -55,7 +50,6 @@ class Gameplay
         }
       }
     }
-
   }
 
 
@@ -97,7 +91,6 @@ class Gameplay
     // draw borders
     rect(0,0,width/4,height);
     rect(width-width/4,0,width/4,height);
-
   }
 
 }
