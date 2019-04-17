@@ -10,7 +10,7 @@ class Gameplay
   constructor(){}
 
    setup() {
-    createCanvas(400, 400);
+    // createCanvas(400, 400);
 
     // monster parameters
     x = width / 2;
@@ -42,14 +42,14 @@ class Gameplay
     if (squareLength+50 > playerY && squareLength < playerY){
 
       if (key == 'a') {
-        playerX = playerX - 62;
+        playerX = playerX - width/8;
         if (wrongAwnser <= 1) {
           y = y - 20;
           print('a')
         }
       }
       if (key == 'd') {
-        playerX = playerX + 62;
+        playerX = playerX + width/8;
         if (wrongAwnser > 1) {
           y = y - 20;
         }
@@ -91,12 +91,12 @@ class Gameplay
     rect(squareX,squareY,50,squareLength);
 
     // draw lanes
-    rect(250,squareLength + 50,50, 400 - squareLength);
-    rect(100,squareLength + 50,50, 400 - squareLength);
+    rect(width/4,squareLength + 100,width/8, height - squareLength);
+    rect((width/8)*5,squareLength + 100,width/8, height - squareLength);
 
     // draw borders
-    rect(0,0,100,400);
-    rect(width-100,0,100,400);
+    rect(0,0,width/4,height);
+    rect(width-width/4,0,width/4,height);
 
   }
 
