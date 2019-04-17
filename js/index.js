@@ -25,8 +25,6 @@ function setup()
   // create new gameplay class
   game = new Gameplay();
 
-  game.setup();
-
   // Background
   background(0);
 }
