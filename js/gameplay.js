@@ -31,14 +31,14 @@ class Gameplay
     // check if movement is possible
     if (this.squareLength+50 > this.playerY && this.squareLength < this.playerY){
       if (key == 'a') {
-        this.playerX = this.playerX - this.width/8;
+        this.playerX = this.playerX - width/8;
         if (this.wrongAwnser <= 1) {
           this.y = this.y - 20;
           print('a')
         }
       }
       if (key == 'd') {
-        this.playerX = this.playerX + this.width/8;
+        this.playerX = this.playerX + width/8;
         if (this.wrongAwnser > 1) {
           this.y = this.y - 20;
         }
