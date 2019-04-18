@@ -178,6 +178,10 @@ class Gameplay
     if (this.squareLength >= this.playerY && this.playerMoved == 0) {
       this.gameOver();
     }
+
+    textSize(width/50);
+    fill(255, 255, 255);
+    text('Welke toon klinkt hoger?', 0, 50);
   }
 
 }
