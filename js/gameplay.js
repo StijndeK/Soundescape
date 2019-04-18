@@ -10,7 +10,7 @@ class Gameplay
 
     // monster parameters
     this.y = height - (height / 100);
-    this.s = width / 75;
+    this.s = width / 60;
     this.x = width / 2 ;
 
 
@@ -71,6 +71,7 @@ class Gameplay
     this.squareLength = 0;
     this.x = width / 2 ;
     this.playerX = this.x;
+    this.currentQuestion++;
   }
 
   gameOver()
