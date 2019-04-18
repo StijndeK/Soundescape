@@ -139,7 +139,7 @@ class Gameplay
     this.squareLength = this.squareLength + (1 * this.speedVar);
 
     // draw obstacle
-    rect(this.squareX - (width/32/3), this.squareY, width/32, this.squareLength);
+    rect(this.squareX - (width/32/2), this.squareY, width/32, this.squareLength);
 
     // draw lanes
     rect(width / 4, this.squareLength + this.junctionDistance, width / 8, height - this.squareLength);
