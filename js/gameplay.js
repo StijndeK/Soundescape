@@ -102,6 +102,8 @@ class Gameplay
      // Update the question
      this.questions[this.currentQuestion].draw();
 
+     print(this.currentQuestion) 
+
      // check movement
      if (this.moveLeft === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
        this.playerX = this.playerX - width / 8;
