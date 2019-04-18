@@ -24,6 +24,12 @@ class Question
     return this.correctAnswer;
   }
 
+  // Return this given answer
+  getGivenAnswer()
+  {
+    return this.givenAnswer;
+  }
+
   // Return the sample that is the answer
   getAnswerSample()
   {
