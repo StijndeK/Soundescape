@@ -5,9 +5,10 @@ class Gameplay
     frameRate(60);
 
     // monster parameters
-    this.x = width / 2;
     this.y = height - (height / 100);
     this.s = width / 75;
+    this.x = width / 2 ;
+
 
     // player parameters
     this.playerX = this.x;
@@ -71,8 +72,6 @@ class Gameplay
      background(220);
 
 
-
-
      // check movement
      if (this.moveLeft === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
        this.playerX = this.playerX - width / 8;
@@ -115,18 +114,19 @@ class Gameplay
     this.squareLength = this.squareLength + (1 * this.speedVar);
 
     // draw obstacle
-    rect(this.squareX, this.squareY, 50, this.squareLength);
+    rect(this.squareX - (width/32/3), this.squareY, width/32, this.squareLength);
 
     // draw lanes
     rect(width / 4, this.squareLength + this.junctionDistance, width / 8, height - this.squareLength);
     rect((width / 8) * 5, this.squareLength + this.junctionDistance, width / 8, height - this.squareLength);
+
 
     // draw borders
     rect(0, 0, width / 4, height);
     rect(width - width / 4, 0, width / 4, height);
 
     // draw score
-    textSize(150);
+    textSize(width/50);
     fill(255, 255, 255);
     text(int(this.squareLength/ 100) , (width / 8) * 7, 200);
   }
