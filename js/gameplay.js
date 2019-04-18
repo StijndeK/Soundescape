@@ -66,13 +66,27 @@ class Gameplay
     }
   }
 
+  resetMap()
+  {
+    this.squareLength = 0;
+    this.x = width / 2 ;
+    this.playerX = this.x;
+  }
+
+  gameOver()
+  {
+    this.squareLength = 0;
+    this.x = width / 2 ;
+    this.playerX = this.x;
+    print('GAMEOVER')
+  }
+
   draw()
   {
-    // alle snelheid * de hoeveelheid doen. dat 1 frame altijd laten we zeggen van 1000 gaat.
-    // dus als scherm 1000 hoog is is het * 1
-    // als het scherm 2000 hoog is is het * 2
-    // als het scherm 500 is is het * 0.5
-    // dus delen door 1000
+     // check for collision with obstacle
+     if (this.squareLength >= this.playerY) {
+       this.gameOver();
+     }
 
      // scale(windowWidth/800);
      background(220);
@@ -84,7 +98,7 @@ class Gameplay
      if (this.moveLeft === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
        this.playerX = this.playerX - width / 8;
        this.moveLeft = 0;
-       print('sdf')
+       // move monster
        if (this.questions[this.currentQuestion].getAnswer() == 1) {
          this.y = this.y - 40;
        }
@@ -92,6 +106,7 @@ class Gameplay
      if (this.moveRight === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
        this.playerX = this.playerX + width / 8;
        this.moveRight = 0
+       // move monster
        if (this.questions[this.currentQuestion].getAnswer() == 0) {
          this.y = this.y - 40;
        }
@@ -129,7 +144,6 @@ class Gameplay
     rect(width / 4, this.squareLength + this.junctionDistance, width / 8, height - this.squareLength);
     rect((width / 8) * 5, this.squareLength + this.junctionDistance, width / 8, height - this.squareLength);
 
-
     // draw borders
     rect(0, 0, width / 4, height);
     rect(width - width / 4, 0, width / 4, height);
@@ -138,6 +152,11 @@ class Gameplay
     textSize(width/50);
     fill(255, 255, 255);
     text(int(this.squareLength/ 100) , (width / 8) * 7, 200);
+
+    // reset map after lane has been chosen
+    if (this.squareLength > (width * 1.2)) {
+      this.resetMap();
+    }
   }
 
 }
