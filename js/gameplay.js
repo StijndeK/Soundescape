@@ -27,6 +27,10 @@ class Gameplay
 
     // player only plays once Check
     this.playerMoved = 0;
+
+    // move player
+    this.moveLeft = 0;
+    this.moveRight = 0;
   }
 
   keyPressed()
@@ -35,17 +39,10 @@ class Gameplay
     if (this.squareLength+200 > this.playerY && this.squareLength < this.playerY && this.playerMoved === 0){
       this.playerMoved = 1;
       if (key == 'a') {
-        this.playerX = this.playerX - width / 8;
-        if (this.wrongAwnser == 0) {
-          this.y = this.y - 20;
-          print('a')
-        }
+        this.moveLeft = 1;
       }
       if (key == 'd') {
-        this.playerX = this.playerX + width / 8;
-        if (this.wrongAwnser == 1) {
-          this.y = this.y - 20;
-        }
+        this.moveRight = 1;
       }
     }
   }
@@ -54,6 +51,22 @@ class Gameplay
   draw()
   {
      background(220);
+
+     // check movement
+     if (this.moveLeft === 1 && this.squareLength+100 > this.playerY) {
+       this.playerX = this.playerX - width / 8;
+       this.moveLeft = 0;
+       if (this.wrongAwnser == 0) {
+         this.y = this.y - 20;
+       }
+     }
+     if (this.moveRight === 1 && this.squareLength+100 > this.playerY) {
+       this.playerX = this.playerX + width / 8;
+       this.moveRight = 0
+       if (this.wrongAwnser == 1) {
+         this.y = this.y - 20;
+       }
+     }
 
      fill(this.colorObst);
 
