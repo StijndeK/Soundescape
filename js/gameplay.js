@@ -40,7 +40,6 @@ class Gameplay
 
     // speedvariable
     this.speedVar = height / 700.0;
-    print('speedVar', this.speedVar);
 
     // distance for junction
     this.junctionDistance = height / 5
@@ -99,11 +98,6 @@ class Gameplay
 
      // scale(windowWidth/800);
      background(220);
-
-     // Update the question
-     this.questions[this.currentQuestion].sampleInterval = int(60 / this.speedVar);
-     this.questions[this.currentQuestion].draw();
-
 
      // check movement
      if (this.moveLeft === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
@@ -168,6 +162,21 @@ class Gameplay
     textSize(width/50);
     fill(255, 255, 255);
     text(this.score, (width / 8) * 7, 200);
+
+    // Update the question
+    this.question = this.questions[this.currentQuestion];
+    this.question.sampleInterval = int(60 / this.speedVar);
+    this.question.draw();
+
+    // If the question is answered
+    if (this.question.givenAnswer !== null)
+    {
+      if (this.question.givenAnswer === this.question.correctAnswer)
+        fill("green");
+      else
+        fill("red");
+      circle(width / 2, this.squareLength - height / 4, height / 8);
+    }
 
     // reset map after lane has been chosen
     if (this.squareLength > (height * 1.2)) {
