@@ -4,12 +4,12 @@ class Gameplay
   {
     // monster parameters
     this.x = width / 2;
-    this.y = height - 20;
-    this.s = 10;
+    this.y = height - (height / 100);
+    this.s = width / 75;
 
     // player parameters
     this.playerX = this.x;
-    this.playerY = height - 60;
+    this.playerY = height - (height / 10);
 
     // Obstacle parameters
     this.squareX = width / 2 - 25;
@@ -23,13 +23,17 @@ class Gameplay
 
     // set which is right awnser, for now just set it to one
     this.wrongAwnser = int(random(2));
-    print(this.wrongAwnser)
+    print(this.wrongAwnser);
+
+    // player only plays once Check
+    this.playerMoved = 0;
   }
 
   keyPressed()
   {
     // check if movement is possible
-    if (this.squareLength+100 > this.playerY && this.squareLength < this.playerY){
+    if (this.squareLength+200 > this.playerY && this.squareLength < this.playerY && this.playerMoved === 0){
+      this.playerMoved = 1;
       if (key == 'a') {
         this.playerX = this.playerX - width / 8;
         if (this.wrongAwnser == 0) {
@@ -80,8 +84,8 @@ class Gameplay
     rect(this.squareX, this.squareY, 50, this.squareLength);
 
     // draw lanes
-    rect(width / 4, this.squareLength + 100, width / 8, height - this.squareLength);
-    rect((width / 8) * 5, this.squareLength + 100, width / 8, height - this.squareLength);
+    rect(width / 4, this.squareLength + 200, width / 8, height - this.squareLength);
+    rect((width / 8) * 5, this.squareLength + 200, width / 8, height - this.squareLength);
 
     // draw borders
     rect(0, 0, width / 4, height);
