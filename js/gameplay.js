@@ -40,11 +40,14 @@ class Gameplay
     this.moveRight = 0;
 
     // speedvariable
-    this.speedVar = height/1000;
+    this.speedVar = height/700;
     print('speedVar', this.speedVar)
 
     // distance for junction
     this.junctionDistance = height / 5
+
+    // score
+    this.score = 0;
 
     // print(this.questions[this.currentQuestion].getAnswer())
   }
@@ -110,6 +113,11 @@ class Gameplay
        else if (this.y > height) {
          this.y = this.y + 40;
        }
+
+       // update score
+       if (this.questions[this.currentQuestion].getAnswer() ==  0) {
+         this.score++;
+       }
      }
      if (this.moveRight === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
        this.playerX = this.playerX + width / 8;
@@ -120,6 +128,11 @@ class Gameplay
        }
        else if (this.y > height) {
          this.y = this.y + 40;
+       }
+
+       // update score
+       if (this.questions[this.currentQuestion].getAnswer() ==  1) {
+         this.score++;
        }
      }
 
@@ -160,12 +173,13 @@ class Gameplay
     rect(width - width / 4, 0, width / 4, height);
 
     // draw score
+
     textSize(width/50);
     fill(255, 255, 255);
-    text(int(this.squareLength/ 100) , (width / 8) * 7, 200);
+    text(this.score, (width / 8) * 7, 200);
 
     // reset map after lane has been chosen
-    if (this.squareLength > (width * 1.2)) {
+    if (this.squareLength > (width * 1.5)) {
       this.resetMap();
     }
   }
