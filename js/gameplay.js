@@ -45,6 +45,8 @@ class Gameplay
 
     // distance for junction
     this.junctionDistance = height / 5
+
+    // print(this.questions[this.currentQuestion].getAnswer())
   }
 
   keyPressed()
@@ -82,15 +84,16 @@ class Gameplay
      if (this.moveLeft === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
        this.playerX = this.playerX - width / 8;
        this.moveLeft = 0;
-       if (this.wrongAwnser == 0) {
-         this.y = this.y - 20;
+       print('sdf')
+       if (this.questions[this.currentQuestion].getAnswer() == 1) {
+         this.y = this.y - 40;
        }
      }
      if (this.moveRight === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
        this.playerX = this.playerX + width / 8;
        this.moveRight = 0
-       if (this.wrongAwnser == 1) {
-         this.y = this.y - 20;
+       if (this.questions[this.currentQuestion].getAnswer() == 0) {
+         this.y = this.y - 40;
        }
      }
 

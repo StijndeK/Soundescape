@@ -21,7 +21,7 @@ class Question
   // Return the right answer
   getAnswer()
   {
-    return this.answer;
+    return this.correctAnswer;
   }
 
   // Return the sample that is the answer
