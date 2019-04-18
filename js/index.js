@@ -17,7 +17,9 @@ function preload()
 function setup()
 {
   // Create a canvas
+  // createCanvas(windowWidth, windowHeight);
   createCanvas(windowWidth, windowHeight);
+
 
   // Create a new sample class that draws an ellipse
   // sample = new SampleClass(100, 100, 50, mySound);

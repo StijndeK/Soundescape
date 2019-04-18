@@ -2,6 +2,7 @@ class Gameplay
 {
   constructor()
   {
+
     // monster parameters
     this.x = width / 2;
     this.y = height - (height / 100);
@@ -31,6 +32,10 @@ class Gameplay
     // move player
     this.moveLeft = 0;
     this.moveRight = 0;
+
+    // speedvariable
+    this.speedVar = height/1000;
+    print('speedVar', this.speedVar)
   }
 
   keyPressed()
@@ -50,6 +55,13 @@ class Gameplay
 
   draw()
   {
+    // alle snelheid * de hoeveelheid doen. dat 1 frame altijd laten we zeggen van 1000 gaat.
+    // dus als scherm 1000 hoog is is het * 1
+    // als het scherm 2000 hoog is is het * 2
+    // als het scherm 500 is is het * 0.5
+    // dus delen door 1000
+
+     // scale(windowWidth/800);
      background(220);
 
      // check movement
@@ -91,7 +103,7 @@ class Gameplay
     circle(this.playerX, this.playerY, this.s);
 
     // move obstacle
-    this.squareLength = this.squareLength + 1;
+    this.squareLength = this.squareLength + (1 * this.speedVar);
 
     // draw obstacle
     rect(this.squareX, this.squareY, 50, this.squareLength);
