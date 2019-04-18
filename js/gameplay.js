@@ -19,7 +19,7 @@ class Gameplay
     this.playerY = height - (height / 10);
 
     // Obstacle parameters
-    this.squareX = width / 2 - 25;
+    this.squareX = width;
     this.squareY = 0;
     this.squareLength = 50;
 
