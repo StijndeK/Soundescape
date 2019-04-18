@@ -91,10 +91,7 @@ class Gameplay
 
   draw()
   {
-     // check for collision with obstacle
-     if (this.squareLength >= this.playerY) {
-       this.gameOver();
-     }
+
 
      // scale(windowWidth/800);
      background(220);
@@ -102,7 +99,6 @@ class Gameplay
      // Update the question
      this.questions[this.currentQuestion].draw();
 
-     print(this.currentQuestion) 
 
      // check movement
      if (this.moveLeft === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
@@ -138,18 +134,6 @@ class Gameplay
        }
      }
 
-     fill(this.colorObst);
-
-     // draw blocade and make monster come closer
-     if (this.squareLength > 400) {
-       if (this.wrongAwnser == 1) {
-         rect(100,this.squareLength - 400, 100, 50);
-       }
-       else {
-         rect(200,this.squareLength - 400, 100, 50);
-       }
-     }
-
     fill(this.colorMonster);
 
     // monster
@@ -181,8 +165,13 @@ class Gameplay
     text(this.score, (width / 8) * 7, 200);
 
     // reset map after lane has been chosen
-    if (this.squareLength > (width * 1.5)) {
+    if (this.squareLength > (height * 1.4)) {
       this.resetMap();
+    }
+
+    // check for collision with obstacle
+    if (this.squareLength >= this.playerY && this.playerMoved == 0) {
+      this.gameOver();
     }
   }
 
