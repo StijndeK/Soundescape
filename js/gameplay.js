@@ -40,8 +40,8 @@ class Gameplay
     this.moveRight = 0;
 
     // speedvariable
-    this.speedVar = height/700;
-    print('speedVar', this.speedVar)
+    this.speedVar = height / 700.0;
+    print('speedVar', this.speedVar);
 
     // distance for junction
     this.junctionDistance = height / 5
@@ -86,7 +86,7 @@ class Gameplay
     this.playerX = this.x;
     this.playerMoved = 0;
 
-    print('GAMEOVER')
+    console.log('GAMEOVER');
   }
 
   draw()
