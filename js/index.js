@@ -7,25 +7,19 @@ let game;
 function preload()
 {
   soundFormats('wav', 'mp3');
-
-  // Load the sound
-  // mySound = loadSound('assets/blop.wav');
-  // mySound.setVolume(1.0);
 }
 
 // Setup function
 function setup()
 {
   // Create a canvas
-  // createCanvas(windowWidth, windowHeight);
   createCanvas(windowWidth, windowHeight);
 
-
-  // Create a new sample class that draws an ellipse
-  // sample = new SampleClass(100, 100, 50, mySound);
-
   // create new gameplay class
-  game = new Gameplay();
+  game = new Gameplay([
+    new Question(["a1", "b1"], 1),
+    new Question(["c2", "b1"], 0)
+  ]);
 
   // Background
   background(0);

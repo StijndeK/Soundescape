@@ -1,8 +1,12 @@
 class Gameplay
 {
-  constructor()
+  constructor(questions)
   {
     frameRate(60);
+
+    // Initialize questions
+    this.questions = questions;
+    this.currentQuestion = 0;
 
     // monster parameters
     this.y = height - (height / 100);
@@ -46,22 +50,22 @@ class Gameplay
   keyPressed()
   {
     // check if movement is possible
-    if (this.squareLength+this.junctionDistance > this.playerY && this.squareLength < this.playerY && this.playerMoved === 0){
+    if (this.squareLength + this.junctionDistance > this.playerY && this.squareLength < this.playerY && this.playerMoved === 0)
+    {
       this.playerMoved = 1;
       if (key == 'a') {
         this.moveLeft = 1;
+        this.questions[this.currentQuestion].answer(0);
       }
       if (key == 'd') {
         this.moveRight = 1;
+        this.questions[this.currentQuestion].answer(1);
       }
     }
   }
 
   draw()
   {
-
-
-
     // alle snelheid * de hoeveelheid doen. dat 1 frame altijd laten we zeggen van 1000 gaat.
     // dus als scherm 1000 hoog is is het * 1
     // als het scherm 2000 hoog is is het * 2
@@ -71,6 +75,8 @@ class Gameplay
      // scale(windowWidth/800);
      background(220);
 
+     // Update the question
+     this.questions[this.currentQuestion].draw();
 
      // check movement
      if (this.moveLeft === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {

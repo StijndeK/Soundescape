@@ -2,14 +2,20 @@
 class Question
 {
   // Constructor
-  constructor(samples, answer)
+  constructor(samples, correctAnswer)
   {
+    if (!(samples instanceof Array))
+      throw "samples must be an array";
+
     // Constructor variables
+    //this.samples = samples.map(sample => loadSound(sample));
     this.samples = samples;
-    this.answer = answer;
+    this.correctAnswer = correctAnswer;
 
     // Internal variables
+    this.timer = 0;
     this.givenAnswer = null;
+    this.lastGivenAnswer = null;
   }
 
   // Return the right answer
@@ -28,7 +34,7 @@ class Question
   answer(givenAnswer)
   {
     this.givenAnswer = givenAnswer;
-    return this.givenAnswer === this.answer;
+    return this.givenAnswer === this.correctAnswer;
   }
 
   // Update logic
@@ -38,15 +44,21 @@ class Question
     this.timer ++;
 
     // After one second: play the first sample
-    if (timer == 60)
-      this.samples[0].play();
+    if (this.timer == 60)
+      //this.samples[0].play();
+      console.log("sample1");
 
     // After two seconds: play the second sample
-    if (timer == 120)
-      this.samples[1].play();
+    if (this.timer == 120)
+      //this.samples[1].play();
+      console.log("sample2");
 
     // If the question has been answered: play the correct sample
-    if (this.givenAnswer !== null)
-      this.getAnswerSample().play();
+    if (this.givenAnswer !== this.lastGivenAnswer && this.givenAnswer !== null)
+      //this.getAnswerSample().play();
+      console.log("answerSample");
+
+    // Update variables
+    this.lastGivenAnswer = this.givenAnswer;
   }
 }
