@@ -13,7 +13,6 @@ class Gameplay
     this.s = width / 60;
     this.x = width / 2 ;
 
-
     // player parameters
     this.playerX = this.x;
     this.playerY = height - (height / 10);
@@ -91,7 +90,11 @@ class Gameplay
 
   draw()
   {
-
+    // update speed
+    if (this.speedVar < 4) {
+      this.speedVar = height / (700.0 - (this.currentQuestion * 100));
+      print(this.speedVar);
+    }
 
      // scale(windowWidth/800);
      background(220);
@@ -165,7 +168,7 @@ class Gameplay
     text(this.score, (width / 8) * 7, 200);
 
     // reset map after lane has been chosen
-    if (this.squareLength > (height * 1.4)) {
+    if (this.squareLength > (height * 1.2)) {
       this.resetMap();
     }
 
