@@ -72,6 +72,8 @@ class Gameplay
     this.x = width / 2 ;
     this.playerX = this.x;
     this.currentQuestion++;
+    this.playerMoved = 0;
+
   }
 
   gameOver()
@@ -79,6 +81,8 @@ class Gameplay
     this.squareLength = 0;
     this.x = width / 2 ;
     this.playerX = this.x;
+    this.playerMoved = 0;
+
     print('GAMEOVER')
   }
 
@@ -103,6 +107,9 @@ class Gameplay
        if (this.questions[this.currentQuestion].getAnswer() == 1) {
          this.y = this.y - 40;
        }
+       else if (this.y > height) {
+         this.y = this.y + 40;
+       }
      }
      if (this.moveRight === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
        this.playerX = this.playerX + width / 8;
@@ -110,6 +117,9 @@ class Gameplay
        // move monster
        if (this.questions[this.currentQuestion].getAnswer() == 0) {
          this.y = this.y - 40;
+       }
+       else if (this.y > height) {
+         this.y = this.y + 40;
        }
      }
 
