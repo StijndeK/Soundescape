@@ -14,6 +14,7 @@ class Question
 
     // Internal variables
     this.timer = 0;
+    this.sampleInterval = 60;
     this.givenAnswer = null;
     this.lastGivenAnswer = null;
   }
@@ -45,14 +46,14 @@ class Question
       console.log("Currect answer: " + this.correctAnswer);
 
     // After one second: play the first sample
-    if (this.timer == 60)
+    if (this.timer == this.sampleInterval)
     {
       console.log("Playing sample: " + this.sampleNames[0]);
       this.samples[0].play();
     }
 
     // After two seconds: play the second sample
-    if (this.timer == 120)
+    if (this.timer == this.sampleInterval * 2)
     {
       console.log("Playing sample: " + this.sampleNames[1]);
       this.samples[1].play();
@@ -61,7 +62,7 @@ class Question
     // If the question has been answered: play the correct sample
     if (this.givenAnswer !== this.lastGivenAnswer && this.givenAnswer !== null)
     {
-      console.log("Playing coorect sample: " + this.sampleNames[this.correctAnswer]);
+      console.log("Playing correct sample: " + this.sampleNames[this.correctAnswer]);
       this.samples[this.correctAnswer].play();
     }
 

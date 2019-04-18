@@ -85,21 +85,23 @@ class Gameplay
     this.playerX = this.x;
     this.playerMoved = 0;
 
+    this.questions[this.currentQuestion].timer = 0;
+
     console.log('GAMEOVER');
   }
 
   draw()
   {
     // update speed
-    if (this.speedVar < 4) {
-      this.speedVar = height / (700.0 - (this.currentQuestion * 100));
-      print(this.speedVar);
+    if (this.speedVar < 2) {
+      this.speedVar = height / (700.0 - (this.currentQuestion * 50));
     }
 
      // scale(windowWidth/800);
      background(220);
 
      // Update the question
+     this.questions[this.currentQuestion].sampleInterval = int(60 / this.speedVar);
      this.questions[this.currentQuestion].draw();
 
 
