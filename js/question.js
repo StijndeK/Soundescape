@@ -4,6 +4,7 @@ class Question
   // Constructor
   constructor(samples, correctAnswer)
   {
+    //
     if (!(samples instanceof Array))
       throw "samples must be an array";
 
@@ -79,12 +80,17 @@ class Question
     let questions = [];
     for (let i = 0; i < n; i ++)
     {
-      let sample1 = random(samples);
-      let sample2 = random(samples);
+      // set the notes (samples) based on i
+      // TODO: base it on a smarter system then just using i
+      let interVal = 12 - i;
+      let sample1ArrayValue = int(random(i+1));
+      let sample2ArrayValue = sample1ArrayValue + interVal;
 
-      // Don't choose the same sample
-      while (sample1 === sample2)
-        sample2 = random(samples);
+      print(sample1ArrayValue,sample2ArrayValue)
+
+      let sample1 = samples[sample1ArrayValue];
+      let sample2 = samples[sample2ArrayValue];
+
 
       let answer = int(samples.indexOf(sample2) > samples.indexOf(sample1));
       questions.push(new Question([sample1, sample2], answer));
