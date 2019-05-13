@@ -7,7 +7,11 @@ function preload()
 {
   soundFormats('wav', 'mp3');
 
-  let samples = ["assets/samples/C2.wav", "assets/samples/Cs2.wav", "assets/samples/D2.wav", "assets/samples/Ds2.wav", "assets/samples/E2.wav", "assets/samples/F2.wav", "assets/samples/Fs2.wav", "assets/samples/G2.wav", "assets/samples/Gs2.wav", "assets/samples/A2.wav", "assets/samples/As2.wav", "assets/samples/B2.wav", "assets/samples/C3.wav", "assets/samples/Cs3.wav", "assets/samples/D3.wav", "assets/samples/Ds3.wav", "assets/samples/E3.wav", "assets/samples/F3.wav", "assets/samples/Fs3.wav", "assets/samples/G3.wav", "assets/samples/Gs3.wav", "assets/samples/A3.wav", "assets/samples/As3.wav", "assets/samples/B3.wav", "assets/samples/C4.wav"];
+  let samples = ["assets/samples/Klarinet/Klarinet1.wav", "assets/samples/Klarinet/Klarinet2.wav", "assets/samples/Klarinet/Klarinet3.wav",
+  "assets/samples/Klarinet/Klarinet4.wav", "assets/samples/Klarinet/Klarinet5.wav", "assets/samples/Klarinet/Klarinet6.wav",
+  "assets/samples/Klarinet/Klarinet7.wav", "assets/samples/Klarinet/Klarinet8.wav", "assets/samples/Klarinet/Klarinet9.wav",
+  "assets/samples/Klarinet/Klarinet10.wav", "assets/samples/Klarinet/Klarinet11.wav", "assets/samples/Klarinet/Klarinet12.wav",
+  "assets/samples/Klarinet/Klarinet13.wav", ];
 
   questions = Question.generatePitchQuestions(10, samples);
 }
