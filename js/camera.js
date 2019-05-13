@@ -56,7 +56,6 @@ class Camera
   doRotate(rotation, time = 0)
   {
     this.transitions.push(new Transition(this.rotation, rotation, time, function(lerpedValue) {
-      print(lerpedValue);
       this.rotation = lerpedValue;
     }.bind(this)));
   }

@@ -12,14 +12,19 @@ class Gameplay
     this.currentQuestion = 0;
 
     // Initialize map
-    this.map = new Map();
+    this.map = new TileMap();
     this.map.addTile(0, 0);
-    this.map.addTile(0, -1);
+    this.map.addTile(0, 1);
+    this.map.generateQuestion(0, 0, 1);
 
     // Initialize player and monster
     this.player = new Character(0, 0, color(0, 128, 0));
     this.monster = new Character(0, 100, color(255, 0, 0));
     this._lastPlayerDirection = this.player.direction;
+
+    // Current tile
+    this.playerTile = null;
+    this._lastPlayerTile = this.playerTile;
 
     // set which is right awnser, for now just set it to one
     this.wrongAwnser = int(random(2));
@@ -174,8 +179,17 @@ class Gameplay
     this.camera.x = -this.player.x;
     this.camera.y = -this.player.y;
     if (this.player.direction !== this._lastPlayerDirection)
-      this.camera.doRotateDelta(this._lastPlayerDirection - this.player.direction, 60);
+      this.camera.doRotateDelta(this._lastPlayerDirection - this.player.direction, 20);
     this._lastPlayerDirection = this.player.direction;
+
+    // Update current tile
+    this.playerTile = this.map.getPlayerTile(this.player.x, this.player.y);
+    if (this.playerTile !== this._lastPlayerTile)
+    {
+      if (this.playerTile !== null && this.playerTile.trigger !== null)
+        this.playerTile.trigger(this.playerTile);
+    }
+    this._lastPlayerTile = this.playerTile;
 
     // update speed
     if (this.speedVar < 2) {

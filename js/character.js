@@ -6,7 +6,7 @@ class Character
     this.y = y;
     this.color = color;
 
-    this.velocity = 1;
+    this.velocity = 2;
     this.direction = -90;
   }
 
