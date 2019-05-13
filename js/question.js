@@ -83,13 +83,21 @@ class Question
       // set the notes (samples) based on i
       // TODO: base it on a smarter system then just using i
       let interVal = 12 - i;
-      let sample1ArrayValue = int(random(i+1));
-      let sample2ArrayValue = sample1ArrayValue + interVal;
+      let sampleArrayValue1 = int(random(i+1));
+      let sampleArrayValue2 = sampleArrayValue1 + interVal;
 
-      print(sample1ArrayValue,sample2ArrayValue)
+      let sampleArrayValues = [sampleArrayValue1, sampleArrayValue2];
 
-      let sample1 = samples[sample1ArrayValue];
-      let sample2 = samples[sample2ArrayValue];
+      print(sampleArrayValue1,sampleArrayValue2);
+
+      let decideSample = int(random(2));
+      print(decideSample);
+
+
+      // decide which sample is first
+
+      let sample1 = samples[sampleArrayValues[decideSample]];
+      let sample2 = samples[sampleArrayValues[1-decideSample]];
 
 
       let answer = int(samples.indexOf(sample2) > samples.indexOf(sample1));
