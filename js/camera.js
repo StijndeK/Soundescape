@@ -56,6 +56,7 @@ class Camera
   doRotate(rotation, time = 0)
   {
     this.transitions.push(new Transition(this.rotation, rotation, time, function(lerpedValue) {
+      print(lerpedValue);
       this.rotation = lerpedValue;
     }.bind(this)));
   }
@@ -81,9 +82,10 @@ class Camera
   {
     push();
     angleMode(DEGREES);
-    translate(this.x, this.y);
+    translate(width / 2,  height / 2);
     scale(this.scale);
     rotate(this.rotation);
+    translate(this.x, this.y);
   }
 
   // End draw

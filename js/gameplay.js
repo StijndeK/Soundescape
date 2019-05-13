@@ -4,6 +4,9 @@ class Gameplay
   {
     frameRate(60);
 
+    // Initialize camera
+    this.camera = new Camera();
+
     // Initialize questions
     this.questions = questions;
     this.currentQuestion = 0;
@@ -13,27 +16,10 @@ class Gameplay
     this.map.addTile(0, 0);
     this.map.addTile(0, -1);
 
-    // Initialize camera
-    this.camera = new Camera();
-
-    // monster parameters
-    this.y = height - (height / 100);
-    this.s = width / 60;
-    this.x = width / 2 ;
-
-    // player parameters
-    this.playerX = this.x;
-    this.playerY = height - (height / 10);
-
-    // Obstacle parameters
-    this.squareX = width / 2;
-    this.squareY = 0;
-    this.squareLength = 50;
-
-    // colours
-    this.colorMonster = color(255, 0, 0);
-    this.colorMap = color(0, 0, 0);
-    this.colorObst = color(255, 0, 0);
+    // Initialize player and monster
+    this.player = new Character(0, 0, color(0, 128, 0));
+    this.monster = new Character(0, 100, color(255, 0, 0));
+    this._lastPlayerDirection = this.player.direction;
 
     // set which is right awnser, for now just set it to one
     this.wrongAwnser = int(random(2));
@@ -60,15 +46,24 @@ class Gameplay
 
   keyPressed()
   {
+    if (key === 'a') {
+      this.player.direction -= 90;
+    }
+    if (key === 'd') {
+      this.player.direction += 90;
+    }
+
     // check if movement is possible
     if (this.squareLength + this.junctionDistance > this.playerY && this.squareLength < this.playerY && this.playerMoved === 0)
     {
       this.playerMoved = 1;
       if (key == 'a') {
+        this.player.direction -= 90;
         this.moveLeft = 1;
         this.questions[this.currentQuestion].answer(0);
       }
       if (key == 'd') {
+        this.player.direction += 90;
         this.moveRight = 1;
         this.questions[this.currentQuestion].answer(1);
       }
@@ -108,14 +103,12 @@ class Gameplay
 
     // Draw the map
     this.map.draw();
-    /*
-    // monster
-    fill(this.colorMonster);
-    circle(this.playerX, this.y, this.s);
 
-    // player
-    fill(this.colorMap);
-    circle(this.playerX, this.playerY, this.s);
+    // Draw player and monster
+    this.player.draw();
+    this.monster.draw();
+
+    /*
 
     // draw obstacle
     rect(this.squareX - (width/32/2), this.squareY, width/32, this.squareLength);
@@ -172,6 +165,17 @@ class Gameplay
 
     // Update the camera
     this.camera.update();
+
+    // Update the player and monster
+    this.player.update();
+    this.monster.update();
+
+    // Update the camera position
+    this.camera.x = -this.player.x;
+    this.camera.y = -this.player.y;
+    if (this.player.direction !== this._lastPlayerDirection)
+      this.camera.doRotateDelta(this._lastPlayerDirection - this.player.direction, 60);
+    this._lastPlayerDirection = this.player.direction;
 
     // update speed
     if (this.speedVar < 2) {

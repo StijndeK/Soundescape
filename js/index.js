@@ -24,11 +24,6 @@ function setup()
 
   // create new gameplay class
   game = new Gameplay(questions);
-  game.camera.x = windowWidth / 2;
-  game.camera.y = windowWidth / 2;
-  game.camera.doScale(2.0, 120);
-  game.camera.doMoveDelta(0, -200, 300);
-  game.camera.doRotateDelta(-90, 60);
 
   // Background
   background(0);
