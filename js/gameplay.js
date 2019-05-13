@@ -8,6 +8,14 @@ class Gameplay
     this.questions = questions;
     this.currentQuestion = 0;
 
+    // Initialize map
+    this.map = new Map();
+    this.map.addTile(0, 0);
+    this.map.addTile(0, -1);
+
+    // Initialize camera
+    this.camera = new Camera();
+
     // monster parameters
     this.y = height - (height / 100);
     this.s = width / 60;
@@ -89,62 +97,25 @@ class Gameplay
     console.log('GAMEOVER');
   }
 
+  // Draw function
   draw()
   {
-    // update speed
-    if (this.speedVar < 2) {
-      this.speedVar = height / (700.0 - (this.currentQuestion * 50));
-    }
+    // scale(windowWidth/800);
+    background(0);
 
-     // scale(windowWidth/800);
-     background(220);
+    // Begin drawing the camera
+    this.camera.beginDraw();
 
-     // check movement
-     if (this.moveLeft === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
-       this.playerX = this.playerX - width / 8;
-       this.moveLeft = 0;
-       // move monster
-       if (this.questions[this.currentQuestion].getAnswer() == 1) {
-         this.y = this.y - 40;
-       }
-       else if (this.y > height) {
-         this.y = this.y + 40;
-       }
-
-       // update score
-       if (this.questions[this.currentQuestion].getAnswer() ==  0) {
-         this.score++;
-       }
-     }
-     if (this.moveRight === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
-       this.playerX = this.playerX + width / 8;
-       this.moveRight = 0
-       // move monster
-       if (this.questions[this.currentQuestion].getAnswer() == 0) {
-         this.y = this.y - 40;
-       }
-       else if (this.y > height) {
-         this.y = this.y + 40;
-       }
-
-       // update score
-       if (this.questions[this.currentQuestion].getAnswer() ==  1) {
-         this.score++;
-       }
-     }
-
-    fill(this.colorMonster);
-
+    // Draw the map
+    this.map.draw();
+    /*
     // monster
+    fill(this.colorMonster);
     circle(this.playerX, this.y, this.s);
 
-    fill(this.colorMap);
-
     // player
+    fill(this.colorMap);
     circle(this.playerX, this.playerY, this.s);
-
-    // move obstacle
-    this.squareLength = this.squareLength + (1 * this.speedVar);
 
     // draw obstacle
     rect(this.squareX - (width/32/2), this.squareY, width/32, this.squareLength);
@@ -158,14 +129,11 @@ class Gameplay
     rect(width - width / 4, 0, width / 4, height);
 
     // draw score
-
     textSize(width/50);
     fill(255, 255, 255);
     text(this.score, (width / 8) * 7, 200);
 
-    // Update the question
-    this.question = this.questions[this.currentQuestion];
-    this.question.sampleInterval = int(60 / this.speedVar);
+    // Draw the question
     this.question.draw();
 
     // If the question is answered
@@ -190,7 +158,65 @@ class Gameplay
 
     textSize(width/50);
     fill(255, 255, 255);
-    text('Welke toon klinkt hoger?', 0, 50);
+    text('Welke toon klinkt hoger?', 0, 50);*/
+
+    // End drawing the camera
+    this.camera.endDraw();
   }
 
+  // Update function
+  update()
+  {
+    // Update the map
+    this.map.update();
+
+    // Update the camera
+    this.camera.update();
+
+    // update speed
+    if (this.speedVar < 2) {
+      this.speedVar = height / (700.0 - (this.currentQuestion * 50));
+    }
+
+    // check movement
+    if (this.moveLeft === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
+      this.playerX = this.playerX - width / 8;
+      this.moveLeft = 0;
+      // move monster
+      if (this.questions[this.currentQuestion].getAnswer() == 1) {
+        this.y = this.y - 40;
+      }
+      else if (this.y > height) {
+        this.y = this.y + 40;
+      }
+
+      // update score
+      if (this.questions[this.currentQuestion].getAnswer() ==  0) {
+        this.score++;
+      }
+    }
+    if (this.moveRight === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
+      this.playerX = this.playerX + width / 8;
+      this.moveRight = 0
+      // move monster
+      if (this.questions[this.currentQuestion].getAnswer() == 0) {
+        this.y = this.y - 40;
+      }
+      else if (this.y > height) {
+        this.y = this.y + 40;
+      }
+
+      // update score
+      if (this.questions[this.currentQuestion].getAnswer() ==  1) {
+        this.score++;
+      }
+    }
+
+    // move obstacle
+    this.squareLength = this.squareLength + (1 * this.speedVar);
+
+    // Update the question
+    this.question = this.questions[this.currentQuestion];
+    this.question.sampleInterval = int(60 / this.speedVar);
+  }
 }
