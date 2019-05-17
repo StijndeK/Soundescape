@@ -22,17 +22,8 @@ function setup()
   // Create a canvas
   createCanvas(windowWidth, windowHeight);
 
-  // create new gameplay class
+  // Create new gameplay class
   game = new Gameplay(questions);
-
-  // Background
-  background(0);
-}
-
-// keypressed function
-function keyPressed() {
-  game.keyPressed();
-
 }
 
 // Draw function
@@ -40,6 +31,12 @@ function draw()
 {
   game.update();
   game.draw();
+}
+
+// Key press event
+function keyPressed()
+{
+  game.keyPressed();
 }
 
 // Resize function

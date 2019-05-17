@@ -88,10 +88,7 @@ class Question
 
       let sampleArrayValues = [sampleArrayValue1, sampleArrayValue2];
 
-      print(sampleArrayValue1,sampleArrayValue2);
-
       let decideSample = int(random(2));
-      print(decideSample);
 
 
       // decide which sample is first

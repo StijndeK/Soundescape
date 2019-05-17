@@ -1,115 +1,48 @@
+// Gameplay class
 class Gameplay
 {
   constructor(questions)
   {
     frameRate(60);
 
-    // Initialize camera
-    this.camera = new Camera();
-
     // Initialize questions
     this.questions = questions;
     this.currentQuestion = 0;
 
-    // Initialize map
-    this.map = new TileMap();
-    this.map.generateQuestion(new Point(0, 0), Direction.NORTH);
+    // Initialize camera
+    this.camera = new Camera();
 
-    // Initialize player and monster
-    this.player = new Character(0, 0, color(0, 128, 0));
-    this.monster = new Character(0, 100, color(255, 0, 0));
-    this._lastPlayerDirection = this.player.direction;
+    // Initialize objects
+    this.map = new TileMap(this);
+    this.player = new Player(this, 0, 0);
+    this.monster = new Monster(this, 0, 100);
+
+    // Generate the first question
+    this.generateQuestion(Coord.ORIGIN, Direction.NORTH);
 
     // Current tile
     this.playerTile = null;
     this._lastPlayerTile = this.playerTile;
 
-    // set which is right awnser, for now just set it to one
-    this.wrongAwnser = int(random(2));
-    print(this.wrongAwnser);
-
-    // player only plays once Check
-    this.playerMoved = 0;
-
-    // move player
-    this.moveLeft = 0;
-    this.moveRight = 0;
-
-    // speedvariable
-    this.speedVar = height / 700.0;
-
-    // distance for junction
-    this.junctionDistance = height / 5
-
-    // score
+    // Score
     this.score = 0;
-
-    // print(this.questions[this.currentQuestion].getAnswer())
-  }
-
-  keyPressed()
-  {
-    if (key === 'a') {
-      this.player.direction -= 90;
-    }
-    if (key === 'd') {
-      this.player.direction += 90;
-    }
-
-    // check if movement is possible
-    if (this.squareLength + this.junctionDistance > this.playerY && this.squareLength < this.playerY && this.playerMoved === 0)
-    {
-      this.playerMoved = 1;
-      if (key == 'a') {
-        this.player.direction -= 90;
-        this.moveLeft = 1;
-        this.questions[this.currentQuestion].answer(0);
-      }
-      if (key == 'd') {
-        this.player.direction += 90;
-        this.moveRight = 1;
-        this.questions[this.currentQuestion].answer(1);
-      }
-    }
-  }
-
-  resetMap()
-  {
-    this.squareLength = 0;
-    this.x = width / 2 ;
-    this.playerX = this.x;
-    this.currentQuestion++;
-    this.playerMoved = 0;
-
-  }
-
-  gameOver()
-  {
-    this.squareLength = 0;
-    this.x = width / 2 ;
-    this.playerX = this.x;
-    this.playerMoved = 0;
-
-    this.questions[this.currentQuestion].timer = 0;
-
-    console.log('GAMEOVER');
   }
 
   // Draw function
   draw()
   {
-    // scale(windowWidth/800);
     background(0);
 
     // Begin drawing the camera
     this.camera.beginDraw();
 
-    // Draw the map
+    // Draw objects
     this.map.draw();
-
-    // Draw player and monster
     this.player.draw();
     this.monster.draw();
+
+    // End drawing the camera
+    this.camera.endDraw();
 
     /*
 
@@ -155,30 +88,22 @@ class Gameplay
     textSize(width/50);
     fill(255, 255, 255);
     text('Welke toon klinkt hoger?', 0, 50);*/
-
-    // End drawing the camera
-    this.camera.endDraw();
   }
 
   // Update function
   update()
   {
-    // Update the map
-    this.map.update();
-
     // Update the camera
     this.camera.update();
 
-    // Update the player and monster
+    // Update the objects
+    this.map.update();
     this.player.update();
     this.monster.update();
 
     // Update the camera position
     this.camera.x = -this.player.x;
     this.camera.y = -this.player.y;
-    if (this.player.direction !== this._lastPlayerDirection)
-      this.camera.doRotateDelta(this._lastPlayerDirection - this.player.direction, 20);
-    this._lastPlayerDirection = this.player.direction;
 
     // Update current tile
     this.playerTile = this.map.getPlayerTile(this.player.x, this.player.y);
@@ -189,12 +114,7 @@ class Gameplay
     }
     this._lastPlayerTile = this.playerTile;
 
-    // update speed
-    if (this.speedVar < 2) {
-      this.speedVar = height / (700.0 - (this.currentQuestion * 50));
-    }
-
-    // check movement
+    /*// check movement
     if (this.moveLeft === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
       this.playerX = this.playerX - width / 8;
       this.moveLeft = 0;
@@ -228,11 +148,96 @@ class Gameplay
       }
     }
 
-    // move obstacle
-    this.squareLength = this.squareLength + (1 * this.speedVar);
-
     // Update the question
     this.question = this.questions[this.currentQuestion];
-    this.question.sampleInterval = int(60 / this.speedVar);
+    this.question.sampleInterval = int(60 / this.speedVar);*/
+  }
+
+  // Key press event
+  keyPressed()
+  {
+    if (key === 'a')
+    {
+      // Rotate the player
+      this.player.moveLeft();
+    }
+
+    if (key === 'd')
+    {
+      // Rotate the player
+      this.player.moveRight();
+    }
+
+    /*
+    // check if movement is possible
+    if (this.squareLength + this.junctionDistance > this.playerY && this.squareLength < this.playerY && this.playerMoved === 0)
+    {
+      this.playerMoved = 1;
+      if (key == 'a') {
+        this.player.direction -= 90;
+        this.moveLeft = 1;
+        this.questions[this.currentQuestion].answer(0);
+      }
+      if (key == 'd') {
+        this.player.direction += 90;
+        this.moveRight = 1;
+        this.questions[this.currentQuestion].answer(1);
+      }
+    }*/
+  }
+
+  // Event when the player moves left
+  onPlayerMoveLeft(e)
+  {
+    // Answer the question
+    //this.currentQuestion.answer(0);
+
+    // Rotate the camera
+    this.camera.doRotateDelta(90, 20);
+  }
+
+  // Event when the player moves right
+  onPlayerMoveRight(e)
+  {
+    // Answer the question
+    //this.currentQuestion.answer(1);
+
+    // Rotate the camera
+    this.camera.doRotateDelta(-90, 20);
+  }
+
+  // Generate a new question
+  generateQuestion(position, direction, baseLength = 4, baseWidth = 2)
+  {
+    let newTiles = [];
+
+    // Add base
+    for (let i = 0; i < baseLength + 1; i ++)
+      newTiles.push(new Tile(position.add({x: 0, y: i, direction: direction})));
+
+    // Add first branches with triggers
+    let leftPosition = position.add({x: -1, y: baseLength, direction: direction});
+    let leftNewPosition = position.add({x: -(baseWidth + 1), y: baseLength, direction: direction});
+    newTiles.push(new Tile(leftPosition, tile => {
+      this.generateQuestion(leftNewPosition, Direction.left(direction));
+      this.map.removeTiles(newTiles);
+    }));
+
+    let rightPosition = position.add({x: 1, y: baseLength, direction: direction});
+    let rightNewPosition = position.add({x: baseWidth + 1, y: baseLength, direction: direction});
+    newTiles.push(new Tile(rightPosition, tile => {
+      this.generateQuestion(rightNewPosition, Direction.right(direction));
+      this.map.removeTiles(newTiles);
+    }));
+
+    // Add branches
+    for (let i = 1; i < baseWidth; i ++)
+    {
+      newTiles.push(new Tile(position.add({x: i + 1, y: baseLength, direction: direction})));
+      newTiles.push(new Tile(position.add({x: -(i + 1), y: baseLength, direction: direction})));
+    }
+
+    // Add the tiles
+    this.map.addTiles(newTiles);
   }
 }
