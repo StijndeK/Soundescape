@@ -13,9 +13,7 @@ class Gameplay
 
     // Initialize map
     this.map = new TileMap();
-    this.map.addTile(0, 0);
-    this.map.addTile(0, 1);
-    this.map.generateQuestion(0, 0, 1);
+    this.map.generateQuestion(new Point(0, 0), Direction.NORTH);
 
     // Initialize player and monster
     this.player = new Character(0, 0, color(0, 128, 0));

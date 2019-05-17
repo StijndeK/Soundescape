@@ -1,32 +1,87 @@
-let tileSize = 64;
+// Constants
+const TILE_SIZE = 64;
 
-// Functions for direction
-let south = function(x, y, originX, originY) {
-  return [x, y];
+// Mixins
+Number.prototype.mod = function(n) {
+  return ((this % n) + n) % n;
 };
-let west = function(x, y, originX, originY) {
-  return [originX - (y - originY), originY + (x - originX)];
-};
-let north = function(x, y, originX, originY) {
-  return [originX - (x - originX), originY - (y - originY)];
-};
-let east = function(x, y, originX, originY) {
-  return [originX + (y - originY), originY - (x - originX)];
-};
-let directions = [east, north, west, south];
 
-class Tile
+// Point class
+class Point
 {
-  constructor(x, y, trigger = null)
+  constructor(x, y)
   {
-    // Position of the tile
     this.x = x;
     this.y = y;
+  }
 
-    if (trigger !== null)
-      this.trigger = trigger;
-    else
-      this.trigger = null;
+  // Add a point
+  add(point)
+  {
+    return new Point(this.x + point.x, this.y + point.y);
+  }
+
+  // Subtract a point
+  subtract(point)
+  {
+    return new Point(this.x - point.x, this.y - point.y);
+  }
+
+  // Return if this point equals another point
+  equals(point)
+  {
+    return point instanceof Point && this.x === point.x && this.y === point.y;
+  }
+}
+
+// Direction class
+class Direction
+{
+  constructor(angle, transform)
+  {
+    this.angle = angle;
+    this.transform = transform;
+  }
+}
+
+// Direction definitions
+Direction.EAST = new Direction(0, p => new Point(p.y, -p.x));
+Direction.NORTH = new Direction(90, p => new Point(-p.x, -p.y));
+Direction.WEST = new Direction(180, p => new Point(-p.y, p.x));
+Direction.SOUTH = new Direction(270, p => new Point(p.x, p.y));
+
+// Return the direction to the left (previous)
+Direction.left = function(direction)
+{
+  let array = [Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH];
+  let index = array.indexOf(direction);
+  if (index == -1)
+    throw new Error('The direction is not supported: ' + direction);
+
+  return array[(index - 1).mod(array.length)];
+}
+
+// Return the direction to the right (next)
+Direction.right = function(direction)
+{
+  let array = [Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH];
+  let index = array.indexOf(direction);
+  if (index == -1)
+    throw new Error('The direction is not supported: ' + direction);
+  else
+    return array[(index + 1).mod(array.length)];
+}
+
+// Tile class
+class Tile
+{
+  constructor(position, trigger = null)
+  {
+    // Position of the tile
+    this.position = position;
+
+    // Trigger function
+    this.trigger = trigger;
 
     // Opacity of the tile
     this._opacity = 0.0;
@@ -42,13 +97,13 @@ class Tile
   {
     noStroke();
 
-    if ((this.y % 2 + this.x) % 2 === 0)
+    if ((this.position.y % 2 + this.position.x) % 2 === 0)
       fill(255, 255, 255, this._opacity * 255.0);
     else
       fill(240, 240, 240, this._opacity * 255.0);
 
     rectMode(CENTER);
-    rect(this.x * tileSize, this.y * tileSize, tileSize, tileSize);
+    rect(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
 
   // Update function
@@ -72,10 +127,11 @@ class Tile
   markForRemoval()
   {
     this._markedForRemoval = true;
-    this._opacityVelocity = -0.01;
+    this._opacityVelocity = -0.005;
   }
 }
 
+// Tile map class
 class TileMap
 {
   constructor()
@@ -84,13 +140,13 @@ class TileMap
   }
 
   // Return a tile at a position or null if no tile
-  getTile(x, y)
+  getTile(position)
   {
     // Iterate over the tiles
     for (let i = 0; i < this.tiles.length; i ++)
     {
       let tile = this.tiles[i];
-      if (tile.x === floor(x) && tile.y === floor(y))
+      if (tile.position.equals(position))
         return tile;
     }
 
@@ -101,31 +157,42 @@ class TileMap
   // Return a tile at a player position
   getPlayerTile(px, py)
   {
-    let x = floor((px + tileSize * 0.5) / tileSize);
-    let y = floor((py + tileSize * 0.5) / tileSize);
-    return this.getTile(x, y);
+    let x = floor((px + TILE_SIZE * 0.5) / TILE_SIZE);
+    let y = floor((py + TILE_SIZE * 0.5) / TILE_SIZE);
+    return this.getTile(new Point(x, y));
   }
 
   // Add a tile and return the tile
-  addTile(x, y, trigger = null)
+  addTile(tile)
   {
     // Check if a tile exists and remove it
-    let tile = this.getTile(x, y);
-    if (tile !== null)
-      this.removeTile(x, y);
+    let oldTile = this.getTile(tile.position);
+    if (oldTile !== null)
+      this.removeTile(oldTile);
 
     // Add the tile to the array
-    tile = new Tile(x, y, trigger);
     this.tiles.push(tile);
     return tile;
   }
 
-  // Remove a tile
-  removeTile(x, y)
+  // Add multiple tiles
+  addTiles(tiles)
   {
-    let tile = this.getTile(x, y);
-    if (tile !== null)
-      tile.markForRemoval();
+    for (let tile of tiles)
+      this.addTile(tile);
+  }
+
+  // Remove a tile
+  removeTile(tile)
+  {
+    tile.markForRemoval();
+  }
+
+  // Remove multiple tiles
+  removeTiles(tiles)
+  {
+    for (let tile of tiles)
+      this.removeTile(tile);
   }
 
   // Draw function
@@ -162,43 +229,40 @@ class TileMap
   }
 
   // Generate a new question
-  generateQuestion(x, y, direction)
+  generateQuestion(position, direction)
   {
     let baseLength = 4;
     let baseWidth = 2;
 
-    print(direction);
+    let newTiles = [];
 
     // Add base
     for (let i = 0; i < baseLength + 1; i ++)
-    {
-      let pos = directions[direction](x, y + i, x, y);
-      this.addTile(pos[0], pos[1]);
-    }
+      newTiles.push(new Tile(position.add(direction.transform(new Point(0, i)))));
 
-    // Add first directions
-    let pos1 = directions[direction](x + 1, y + baseLength, x, y);
-    let triggerPos1 = directions[direction](x + baseWidth + 1, y + baseLength, x, y);
-    this.addTile(pos1[0], pos1[1], function(tile) {
-      let newDirection = (directions.indexOf(direction) + 1) % 4;
-      this.generateQuestion(triggerPos1[0], triggerPos1[1], newDirection);
-    }.bind(this));
+    // Add first directions with triggers
+    let leftPosition = position.add(direction.transform(new Point(-1, baseLength)));
+    let leftNewPosition = position.add(direction.transform(new Point(-(baseWidth + 1), baseLength)));
+    newTiles.push(new Tile(leftPosition, tile => {
+      this.generateQuestion(leftNewPosition, Direction.left(direction));
+      this.removeTiles(newTiles);
+    }));
 
-    let pos2 = directions[direction](x - 1, y + baseLength, x, y);
-    let triggerPos2 = directions[direction](x - baseWidth - 1, y + baseLength, x, y);
-    this.addTile(pos2[0], pos2[1], function(tile) {
-      let newDirection = (directions.indexOf(direction) - 1) % 4;
-      this.generateQuestion(triggerPos2[0], triggerPos2[1], newDirection);
-    }.bind(this));
+    let rightPosition = position.add(direction.transform(new Point(1, baseLength)));
+    let rightNewPosition = position.add(direction.transform(new Point(baseWidth + 1, baseLength)));
+    newTiles.push(new Tile(rightPosition, tile => {
+      this.generateQuestion(rightNewPosition, Direction.right(direction));
+      this.removeTiles(newTiles);
+    }));
 
     // Add directions
     for (let i = 1; i < baseWidth; i ++)
     {
-      let pos1 = directions[direction](x + i + 1, y + baseLength, x, y);
-      let pos2 = directions[direction](x - i - 1, y + baseLength, x, y);
-
-      this.addTile(pos1[0], pos1[1]);
-      this.addTile(pos2[0], pos2[1]);
+      newTiles.push(new Tile(position.add(direction.transform(new Point(i + 1, baseLength)))));
+      newTiles.push(new Tile(position.add(direction.transform(new Point(-(i + 1), baseLength)))));
     }
+
+    // Add the tiles
+    this.addTiles(newTiles);
   }
 }
