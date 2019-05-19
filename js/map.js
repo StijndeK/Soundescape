@@ -18,6 +18,8 @@ class Tile
     // Boolean if the tile should be removed
     this._markedForRemoval = false;
     this._remove = false;
+
+    this.img = loadImage('assets/testPict.jpeg');
   }
 
   // Draw function
@@ -30,8 +32,10 @@ class Tile
     else
       fill(240, 240, 240, this._opacity * 255.0);
 
-    rectMode(CENTER);
-    rect(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+    // rectMode(CENTER);
+    imageMode(CENTER);
+    // rect(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+    image(this.img, this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
 
   // Update function

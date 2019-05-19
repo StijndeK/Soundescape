@@ -123,6 +123,18 @@ class Monster extends Character
     this.setXorY();
   }
 
+  // move closer to player
+  moveUp()
+  {
+
+  }
+
+  // move further from player
+  moveDown()
+  {
+
+  }
+
   // set x or y
   setXorY()
   {
