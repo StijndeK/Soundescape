@@ -21,6 +21,10 @@ class Character
 
 //------------------------------------------------------------------------------
 
+let playerY = 0;
+let playerX = 0;
+let newDirection;
+
 // Player class
 class Player extends Character
 {
@@ -42,13 +46,15 @@ class Player extends Character
   update()
   {
     super.update();
+    playerY = this.y;
+    playerX = this.x;
   }
 
   // Rotate to the left
   moveLeft()
   {
     let oldDirection = this.direction;
-    let newDirection = Direction.left(this.direction);
+    newDirection = Direction.left(this.direction);
 
     this.direction = newDirection;
     this.game.onPlayerMoveLeft({oldDirection: oldDirection, newDirection: newDirection});
@@ -58,7 +64,7 @@ class Player extends Character
   moveRight()
   {
     let oldDirection = this.direction;
-    let newDirection = Direction.right(this.direction);
+    newDirection = Direction.right(this.direction);
 
     this.direction = newDirection;
     this.game.onPlayerMoveRight({oldDirection: oldDirection, newDirection: newDirection});
@@ -70,9 +76,11 @@ class Player extends Character
 // Monster class
 class Monster extends Character
 {
+
   constructor(game, x, y)
   {
     super(game, x, y, color(255, 0, 0));
+    this.onX = 1;
   }
 
   // Draw function
@@ -88,5 +96,43 @@ class Monster extends Character
   update()
   {
     super.update();
+
+    // set for move left of right
+    this.checkValue  = (this.onX == 1) ? this.x : this.y;
+    if (this.moveLeftValue == 1 && this.yToMove >= this.checkValue) {
+      this.moveLeftValue = 0;
+      this.direction = newDirection;
+    }
+    if (this.moveRightValue == 1 && this.yToMove >= this.checkValue) {
+      this.moveRightValue = 0;
+      this.direction = newDirection;
+    }
+  }
+
+  // Rotate to the left
+  moveLeft()
+  {
+    this.moveLeftValue = 1;
+    this.setXorY();
+  }
+
+  // Rotate to the right
+  moveRight()
+  {
+    this.moveRightValue = 1;
+    this.setXorY();
+  }
+
+  // set x or y
+  setXorY()
+  {
+    if (this.onX == 1) {
+      this.onX = 0;
+      this.yToMove = playerY;
+    }
+    else {
+      this.onX = 1;
+      this.yToMove = playerX;
+    }
   }
 }

@@ -160,12 +160,14 @@ class Gameplay
     {
       // Rotate the player
       this.player.moveLeft();
+      this.monster.moveLeft();
     }
 
     if (key === 'd')
     {
       // Rotate the player
       this.player.moveRight();
+      this.monster.moveRight();
     }
 
     /*
