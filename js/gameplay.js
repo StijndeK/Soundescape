@@ -26,6 +26,7 @@ class Gameplay
 
     // Score
     this.score = 0;
+    this.gameOver = 0;
   }
 
   // Draw function
@@ -33,16 +34,32 @@ class Gameplay
   {
     background(0);
 
-    // Begin drawing the camera
-    this.camera.beginDraw();
+    // check if game over
+    if (this.gameOver == 1){
+      textSize(width/8);
+      text('GAME OVER', 0 ,height/2);
+      text(this.score, 0, height/4*3);
+    }
+    else {
+      // Begin drawing the camera
+      this.camera.beginDraw();
 
-    // Draw objects
-    this.map.draw();
-    this.player.draw();
-    this.monster.draw();
+      // Draw objects
+      this.map.draw();
+      this.player.draw();
+      this.monster.draw();
 
-    // End drawing the camera
-    this.camera.endDraw();
+      // End drawing the camera
+      this.camera.endDraw();
+
+      // score
+      textSize(width/50);
+      fill(255, 255, 255);
+      text('Welke toon klinkt hoger?', 20, 40);
+      text('SCORE:', width-120, 40);
+      text(this.score, width-40, 40);
+    }
+
 
     /*
 
@@ -111,8 +128,16 @@ class Gameplay
     {
       if (this.playerTile !== null && this.playerTile.trigger !== null)
         this.playerTile.trigger(this.playerTile);
+      // update score
+      this.score++;
     }
     this._lastPlayerTile = this.playerTile;
+
+    // check monster on player
+    if (playerX <= this.monster.x + 2 && playerX >= this.monster.x - 2 && playerY <= this.monster.y + 2 && playerY >= this.monster.y - 2) {
+      this.gameOver = 1;
+    }
+
 
     /*// check movement
     if (this.moveLeft === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
@@ -158,18 +183,26 @@ class Gameplay
   {
     if (key === 'a')
     {
+      // when right awnser
+      this.monster.moveUp();
+
       // Rotate the player
       this.player.moveLeft();
       this.monster.moveLeft();
 
-      
+
     }
 
     if (key === 'd')
     {
+
+      // when wrong awnser
+      this.monster.moveDown();
+
       // Rotate the player
       this.player.moveRight();
       this.monster.moveRight();
+
     }
 
     /*
@@ -194,7 +227,7 @@ class Gameplay
   onPlayerMoveLeft(e)
   {
     // Answer the question
-    //this.currentQuestion.answer(0);
+    // this.currentQuestion.answer(0);
 
     // Rotate the camera
     this.camera.doRotateDelta(90, 20);
@@ -204,7 +237,7 @@ class Gameplay
   onPlayerMoveRight(e)
   {
     // Answer the question
-    //this.currentQuestion.answer(1);
+    // this.currentQuestion.answer(1);
 
     // Rotate the camera
     this.camera.doRotateDelta(-90, 20);

@@ -20,6 +20,7 @@ class Tile
     this._remove = false;
 
     this.img = loadImage('assets/testPict.jpeg');
+    this.tintValue = 255;
   }
 
   // Draw function
@@ -32,9 +33,8 @@ class Tile
     else
       fill(240, 240, 240, this._opacity * 255.0);
 
-    // rectMode(CENTER);
     imageMode(CENTER);
-    // rect(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+    // tint for opacity
     image(this.img, this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
 
@@ -42,6 +42,9 @@ class Tile
   update()
   {
     // Update the opacity
+    // this.tintValue -= 1;
+    // tint(255, this.tintValue);
+
     this._opacity += this._opacityVelocity;
     if (this._opacity <= 0.0)
     {

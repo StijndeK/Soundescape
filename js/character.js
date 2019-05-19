@@ -107,6 +107,8 @@ class Monster extends Character
       this.moveRightValue = 0;
       this.direction = newDirection;
     }
+
+
   }
 
   // Rotate to the left
@@ -126,13 +128,23 @@ class Monster extends Character
   // move closer to player
   moveUp()
   {
-
+    if (this.onX == 1) {
+      this.y = this.y - 50;
+    }
+    else {
+      this.x = this.x - 50;
+    }
   }
 
   // move further from player
   moveDown()
   {
-
+    if (this.onX == 1) {
+      this.y = this.y + 50;
+    }
+    else {
+      this.x = this.x + 50;
+    }
   }
 
   // set x or y
