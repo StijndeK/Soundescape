@@ -33,6 +33,7 @@ function draw()
   game.draw();
 }
 
+
 // Key press event
 function keyPressed()
 {

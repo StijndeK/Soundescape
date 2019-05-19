@@ -56,10 +56,9 @@ class Gameplay
       textSize(width/50);
       fill(255, 255, 255);
       text('Welke toon klinkt hoger?', 20, 40);
-      text('SCORE:', width-120, 40);
-      text(this.score, width-40, 40);
+      text('SCORE:', width-(width/8), 40);
+      text(this.score, width-(width/40), 40);
     }
-
 
     /*
 
@@ -129,7 +128,8 @@ class Gameplay
       if (this.playerTile !== null && this.playerTile.trigger !== null)
         this.playerTile.trigger(this.playerTile);
       // update score
-      this.score++;
+      if (this.gameOver == 0)
+        this.score++;
     }
     this._lastPlayerTile = this.playerTile;
 
