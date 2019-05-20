@@ -42,6 +42,7 @@ class Question
   // Update logic
   draw()
   {
+    print('inside draw question')
     // Print if timer is 0
     if (this.timer == 0)
       console.log("Currect answer: " + this.correctAnswer);

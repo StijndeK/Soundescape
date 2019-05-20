@@ -130,20 +130,16 @@ class Monster extends Character
     // check for x or y
     if (this.onX == 1) {
       // check for direction
-      if (this.y > playerY) {
+      if (this.y > playerY)
         this.y = this.y - 50;
-      }
-      else {
+      else
         this.y = this.y + 50;
-      }
     }
     else {
-      if (this.x > playerX) {
+      if (this.x > playerX)
         this.x = this.x - 50;
-      }
-      else {
+      else
         this.x = this.x + 50;
-      }
     }
   }
 
@@ -152,23 +148,17 @@ class Monster extends Character
   {
     if (this.onX == 1) {
       // check for direction and max reached
-      if (this.y > playerY && this.y < playerY + 99) {
+      if (this.y > playerY && this.y < playerY + 99)
         this.y = this.y + 50;
-      }
-      else if (this.y < playerY && this.y > playerY - 99){
+      else if (this.y < playerY && this.y > playerY - 99)
         this.y = this.y - 50;
-      }
     }
     else {
       // check for direction and max reached
-      if (this.x > playerX && this.x < playerX + 99) {
-        // check for max reached
-        if (this.x)
+      if (this.x > playerX && this.x < playerX + 99)
         this.x = this.x + 50;
-      }
-      else if (this.x < playerX && this.x > playerX - 99){
+      else if (this.x < playerX && this.x > playerX - 99)
         this.x = this.x - 50;
-      }
     }
   }
 

@@ -61,6 +61,8 @@ class Gameplay
       text(this.score, width-(width/40), 40);
     }
 
+    // Draw the question
+
     /*
 
     // draw obstacle
@@ -187,7 +189,6 @@ class Gameplay
   {
     if (key === 'a')
     {
-      // this.monster.direction = 1;
 
       // Rotate the player
       this.player.moveLeft();
@@ -196,7 +197,6 @@ class Gameplay
 
     if (key === 'd')
     {
-      // this.monster.direction = 0;
 
       // Rotate the player
       this.player.moveRight();
