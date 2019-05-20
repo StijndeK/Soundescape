@@ -1,6 +1,7 @@
 // Gameplay class
 class Gameplay
 {
+
   constructor(questions)
   {
     frameRate(60);
@@ -30,7 +31,12 @@ class Gameplay
     this.rightAwnsers = 0;
     this.wrongAwnsers = 0;
 
+    // sounds
+    this.gameOverSound = loadSound('assets/gameOver.wav');
+    this.levelMusic = loadSound('assets/beat.wav');
+    this.levelMusic.setVolume(0.2);
   }
+
 
   // Draw function
   draw()
@@ -38,11 +44,13 @@ class Gameplay
     background(0);
     textAlign(LEFT);
 
+
     // check if game over
     if (this.gameOver == 1){
       textSize(width/8);
       text('GAME OVER', 0 ,height/2);
       text(this.score, 0, height/4*3);
+
     }
     else {
       // Begin drawing the camera
@@ -151,6 +159,7 @@ class Gameplay
     // check monster on player
     if (playerX <= this.monster.x + 2 && playerX >= this.monster.x - 2 && playerY <= this.monster.y + 2 && playerY >= this.monster.y - 2) {
       this.gameOver = 1;
+      this.gameOverSound.play();
     }
 
 
@@ -254,6 +263,7 @@ class Gameplay
     {
       // when right awnser
       this.monster.moveDown();
+      this.levelMusic.loop();
     }
 
     if (key === 'w')
