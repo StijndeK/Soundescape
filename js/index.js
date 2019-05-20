@@ -45,6 +45,7 @@ function draw()
     text('DB-GAST', width/2, 50);
     text('SOUNDESCAPE', width/2, 100);
     text('Druk op s om te beginnen', width/2, 150);
+    text('(conceptart achtergrond)', width/2, 200);
   }
 }
 
