@@ -109,6 +109,9 @@ class Gameplay
   // Update function
   update()
   {
+    // print(this.monster.y, playerY);
+    // print(this.monster.x, playerX);
+
     // Update the camera
     this.camera.update();
 
@@ -176,6 +179,9 @@ class Gameplay
     // Update the question
     this.question = this.questions[this.currentQuestion];
     this.question.sampleInterval = int(60 / this.speedVar);*/
+
+
+    print(playerX, playerY);
   }
 
   // Key press event
@@ -183,21 +189,16 @@ class Gameplay
   {
     if (key === 'a')
     {
-      // when right awnser
-      this.monster.moveUp();
+      // this.monster.direction = 1;
 
       // Rotate the player
       this.player.moveLeft();
       this.monster.moveLeft();
-
-
     }
 
     if (key === 'd')
     {
-
-      // when wrong awnser
-      this.monster.moveDown();
+      // this.monster.direction = 0;
 
       // Rotate the player
       this.player.moveRight();
@@ -205,6 +206,17 @@ class Gameplay
 
     }
 
+    if (key === 's')
+    {
+      // when wrong awnser
+      this.monster.moveDown();
+    }
+
+    if (key === 'w')
+    {
+      // when wrong awnser
+      this.monster.moveUp();
+    }
     /*
     // check if movement is possible
     if (this.squareLength + this.junctionDistance > this.playerY && this.squareLength < this.playerY && this.playerMoved === 0)

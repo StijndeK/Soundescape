@@ -81,6 +81,7 @@ class Monster extends Character
   {
     super(game, x, y, color(255, 0, 0));
     this.onX = 1;
+    this.direction == 0;
   }
 
   // Draw function
@@ -99,16 +100,14 @@ class Monster extends Character
 
     // set for move left of right
     this.checkValue  = (this.onX == 1) ? this.x : this.y;
-    if (this.moveLeftValue == 1 && this.yToMove >= this.checkValue) {
+    if (this.moveLeftValue == 1 && this.yToMove == this.checkValue) {
       this.moveLeftValue = 0;
       this.direction = newDirection;
     }
-    if (this.moveRightValue == 1 && this.yToMove >= this.checkValue) {
+    if (this.moveRightValue == 1 && this.yToMove == this.checkValue) {
       this.moveRightValue = 0;
       this.direction = newDirection;
     }
-
-
   }
 
   // Rotate to the left
@@ -128,11 +127,23 @@ class Monster extends Character
   // move closer to player
   moveUp()
   {
+    // check for x or y
     if (this.onX == 1) {
-      this.y = this.y - 50;
+      // check for direction
+      if (this.y > playerY) {
+        this.y = this.y - 50;
+      }
+      else {
+        this.y = this.y + 50;
+      }
     }
     else {
-      this.x = this.x - 50;
+      if (this.x > playerX) {
+        this.x = this.x - 50;
+      }
+      else {
+        this.x = this.x + 50;
+      }
     }
   }
 
@@ -140,10 +151,24 @@ class Monster extends Character
   moveDown()
   {
     if (this.onX == 1) {
-      this.y = this.y + 50;
+      // check for direction and max reached
+      if (this.y > playerY && this.y < playerY + 99) {
+        this.y = this.y + 50;
+      }
+      else if (this.y < playerY && this.y > playerY - 99){
+        this.y = this.y - 50;
+      }
     }
     else {
-      this.x = this.x + 50;
+      // check for direction and max reached
+      if (this.x > playerX && this.x < playerX + 99) {
+        // check for max reached
+        if (this.x)
+        this.x = this.x + 50;
+      }
+      else if (this.x < playerX && this.x > playerX - 99){
+        this.x = this.x - 50;
+      }
     }
   }
 
