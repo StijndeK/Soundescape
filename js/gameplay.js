@@ -27,6 +27,9 @@ class Gameplay
     // Score
     this.score = 0;
     this.gameOver = 0;
+    this.rightAwnsers = 0;
+    this.wrongAwnsers = 0;
+
   }
 
   // Draw function
@@ -54,15 +57,21 @@ class Gameplay
       this.camera.endDraw();
 
       // score
-      textSize(width/50);
+      textSize(width/40);
       fill(255, 255, 255);
       text('Welke toon klinkt hoger?', 20, 40);
+      textSize(width/50);
+      textAlign(RIGHT);
       text('SCORE:', width-(width/8), 40);
       text(this.score, width-(width/40), 40);
+      text('RIGHT AWNSERS:', width-(width/8), 80);
+      text(this.rightAwnsers, width-(width/40), 80);
+      text('WRONG AWNSERS:', width-(width/8), 120);
+      text(this.wrongAwnsers, width-(width/40), 120);
     }
 
     // Draw the question
-
+    this.question.draw();
     /*
 
     // draw obstacle
@@ -182,6 +191,10 @@ class Gameplay
     // Update the question
     this.question = this.questions[this.currentQuestion];
     this.question.sampleInterval = int(60 / this.speedVar);*/
+
+    // Update the question
+    this.question = this.questions[this.currentQuestion];
+    this.question.sampleInterval = 50;
   }
 
   // Key press event
@@ -189,6 +202,23 @@ class Gameplay
   {
     if (key === 'a')
     {
+      // give awnser
+      this.questions[this.currentQuestion].answer(0);
+
+      // move monster
+      if (this.questions[this.currentQuestion].getAnswer() == 0) {
+        print('MOVEDOWN')
+        this.monster.moveDown();
+        this.rightAwnsers++;
+      }
+      else {
+        print('MOVEUP')
+        this.monster.moveUp();
+        this.wrongAwnsers++;
+      }
+
+      // next question
+      this.currentQuestion++;
 
       // Rotate the player
       this.player.moveLeft();
@@ -197,16 +227,32 @@ class Gameplay
 
     if (key === 'd')
     {
+      // give awnser
+      this.questions[this.currentQuestion].answer(1);
+
+      // move monster
+      if (this.questions[this.currentQuestion].getAnswer() == 1) {
+        print('MOVEDOWN')
+        this.monster.moveDown();
+        this.rightAwnsers++;
+      }
+      else {
+        print('MOVEUP')
+        this.monster.moveUp();
+        this.wrongAwnsers++;
+      }
+
+      // next question
+      this.currentQuestion++;
 
       // Rotate the player
       this.player.moveRight();
       this.monster.moveRight();
-
     }
 
     if (key === 's')
     {
-      // when wrong awnser
+      // when right awnser
       this.monster.moveDown();
     }
 
@@ -254,7 +300,7 @@ class Gameplay
   }
 
   // Generate a new question
-  generateQuestion(position, direction, baseLength = 4, baseWidth = 2)
+  generateQuestion(position, direction, baseLength = 6, baseWidth = 2)
   {
     let newTiles = [];
 

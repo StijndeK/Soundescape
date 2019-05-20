@@ -42,7 +42,6 @@ class Question
   // Update logic
   draw()
   {
-    print('inside draw question')
     // Print if timer is 0
     if (this.timer == 0)
       console.log("Currect answer: " + this.correctAnswer);
@@ -64,8 +63,12 @@ class Question
     // If the question has been answered: play the correct sample
     if (this.givenAnswer !== this.lastGivenAnswer && this.givenAnswer !== null)
     {
+      // this doesnt work because question gets updated
       console.log("Playing correct sample: " + this.sampleNames[this.correctAnswer]);
       this.samples[this.correctAnswer].play();
+
+      // reset timer
+      this.timer = -50;
     }
 
     // Increase the timer
