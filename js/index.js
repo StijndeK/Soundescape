@@ -24,13 +24,28 @@ function setup()
 
   // Create new gameplay class
   game = new Gameplay(questions);
+
+  this.drawGame = 0;
 }
 
 // Draw function
 function draw()
 {
-  game.update();
-  game.draw();
+  if (this.drawGame == 1) {
+    game.update();
+    game.draw();
+  }
+  else {
+    // instructions etcetera
+    background(0);
+
+    textSize(width/50);
+    textAlign(CENTER);
+    fill(255, 255, 255);
+    text('DB-GAST', width/2, 50);
+    text('SOUNDESCAPE', width/2, 100);
+    text('Druk op s om te beginnen', width/2, 150);
+  }
 }
 
 
@@ -38,6 +53,11 @@ function draw()
 function keyPressed()
 {
   game.keyPressed();
+  if (key == 's')
+  {
+    this.drawGame = 1;
+  }
+
 }
 
 // Resize function

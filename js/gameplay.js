@@ -33,6 +33,7 @@ class Gameplay
   draw()
   {
     background(0);
+    textAlign(LEFT);
 
     // check if game over
     if (this.gameOver == 1){
@@ -179,9 +180,6 @@ class Gameplay
     // Update the question
     this.question = this.questions[this.currentQuestion];
     this.question.sampleInterval = int(60 / this.speedVar);*/
-
-
-    print(playerX, playerY);
   }
 
   // Key press event
