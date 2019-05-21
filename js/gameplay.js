@@ -162,6 +162,62 @@ class Gameplay
       this.gameOverSound.play();
     }
 
+    if (this.map.getPlayerAdjacentTile(this.player.y, this.player.x, 0) != null) {
+      print('yes');
+    }
+
+    // check movement is possible, awnser question and move
+    if (this.moveLeft === 1) {
+      // give awnser
+      this.questions[this.currentQuestion].answer(0);
+
+      // move monster
+      if (this.questions[this.currentQuestion].getAnswer() == 0) {
+        print('MOVEDOWN')
+        this.monster.moveDown();
+        this.rightAwnsers++;
+      }
+      else {
+        print('MOVEUP')
+        this.monster.moveUp();
+        this.wrongAwnsers++;
+      }
+
+      // next question
+      this.currentQuestion++;
+
+      // Rotate the player
+      this.player.moveLeft();
+      this.monster.moveLeft();
+
+      this.moveLeft = 0;
+    }
+
+    if (this.moveRight === 1) {
+      // give awnser
+      this.questions[this.currentQuestion].answer(1);
+
+      // move monster
+      if (this.questions[this.currentQuestion].getAnswer() == 1) {
+        print('MOVEDOWN')
+        this.monster.moveDown();
+        this.rightAwnsers++;
+      }
+      else {
+        print('MOVEUP')
+        this.monster.moveUp();
+        this.wrongAwnsers++;
+      }
+
+      // next question
+      this.currentQuestion++;
+
+      // Rotate the player
+      this.player.moveRight();
+      this.monster.moveRight();
+
+      this.moveRight = 0;
+    }
 
     /*// check movement
     if (this.moveLeft === 1 && this.squareLength+(this.junctionDistance/2) > this.playerY) {
@@ -209,54 +265,31 @@ class Gameplay
   // Key press event
   keyPressed()
   {
+
+
     if (key === 'a')
     {
-      // give awnser
-      this.questions[this.currentQuestion].answer(0);
-
-      // move monster
-      if (this.questions[this.currentQuestion].getAnswer() == 0) {
-        print('MOVEDOWN')
-        this.monster.moveDown();
-        this.rightAwnsers++;
+      if (this.monster.onX == 1) {
+        if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, 0) != null)
+          this.moveLeft = 1;
       }
       else {
-        print('MOVEUP')
-        this.monster.moveUp();
-        this.wrongAwnsers++;
+        // if (this.map.getPlayerAdjacentTile(this.player.y, this.player.x, 0) != null)
+          this.moveLeft = 1;
       }
 
-      // next question
-      this.currentQuestion++;
-
-      // Rotate the player
-      this.player.moveLeft();
-      this.monster.moveLeft();
     }
 
     if (key === 'd')
     {
-      // give awnser
-      this.questions[this.currentQuestion].answer(1);
-
-      // move monster
-      if (this.questions[this.currentQuestion].getAnswer() == 1) {
-        print('MOVEDOWN')
-        this.monster.moveDown();
-        this.rightAwnsers++;
+      if (this.monster.onX == 1) {
+        if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, 0) != null)
+        this.moveRight = 1;
       }
       else {
-        print('MOVEUP')
-        this.monster.moveUp();
-        this.wrongAwnsers++;
+        // if (this.map.getPlayerAdjacentTile(this.player.y, this.player.x, 0) != null)
+        this.moveRight = 1;
       }
-
-      // next question
-      this.currentQuestion++;
-
-      // Rotate the player
-      this.player.moveRight();
-      this.monster.moveRight();
     }
 
     if (key === 's')
@@ -287,6 +320,8 @@ class Gameplay
         this.questions[this.currentQuestion].answer(1);
       }
     }*/
+
+    // check if movement is possible
   }
 
   // Event when the player moves left
