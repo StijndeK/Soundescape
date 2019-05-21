@@ -274,7 +274,7 @@ class Gameplay
           this.moveLeft = 1;
       }
       else {
-        // if (this.map.getPlayerAdjacentTile(this.player.y, this.player.x, 0) != null)
+        if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, 0) == null)
           this.moveLeft = 1;
       }
 
@@ -287,8 +287,8 @@ class Gameplay
         this.moveRight = 1;
       }
       else {
-        // if (this.map.getPlayerAdjacentTile(this.player.y, this.player.x, 0) != null)
-        this.moveRight = 1;
+        if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, 0) == null)
+          this.moveRight = 1;
       }
     }
 
