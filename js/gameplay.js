@@ -44,7 +44,6 @@ class Gameplay
     background(0);
     textAlign(LEFT);
 
-
     // check if game over
     if (this.gameOver == 1){
       textSize(width/8);

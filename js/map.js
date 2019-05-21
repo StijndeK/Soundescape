@@ -19,7 +19,24 @@ class Tile
     this._markedForRemoval = false;
     this._remove = false;
 
-    this.img = loadImage('assets/testPict.jpeg');
+    this.imgValue = int(random(3));
+    this.imgPath = 'assets/Road Tile 1.png'
+    this.imgPath = 'assets/Road Tile 2.png'
+    this.imgPath = 'assets/Road Tile 3.png'
+
+    switch(this.imgValue) {
+      case 0:
+        this.imgPath = 'assets/Road Tile 1.png'
+          break;
+      case 1:
+        this.imgPath = 'assets/Road Tile 2.png'
+        break;
+      case 1:
+        this.imgPath = 'assets/Road Tile 3.png'
+        break;
+      }
+
+    this.img = loadImage(this.imgPath);
     this.tintValue = 255;
   }
 
@@ -42,7 +59,7 @@ class Tile
   update()
   {
     // Update the opacity
-    // this.tintValue -= 1;
+    // this.tintValue -= 100;
     // tint(255, this.tintValue);
 
     this._opacity += this._opacityVelocity;
