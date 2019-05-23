@@ -17,7 +17,6 @@ class Character
     this.x -= this.velocity * cos(this.direction.angle);
     this.y -= this.velocity * sin(this.direction.angle);
   }
-
 }
 
 //------------------------------------------------------------------------------

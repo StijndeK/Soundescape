@@ -161,10 +161,6 @@ class Gameplay
       this.gameOverSound.play();
     }
 
-    if (this.map.getPlayerAdjacentTile(this.player.y, this.player.x, 0) != null) {
-      print('yes');
-    }
-
     // check movement is possible, awnser question and move
     if (this.moveLeft === 1) {
       // give awnser
@@ -268,27 +264,14 @@ class Gameplay
 
     if (key === 'a')
     {
-      if (this.monster.onX == 1) {
-        if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, 0) != null)
+      if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, this.player.direction) != null)
           this.moveLeft = 1;
-      }
-      else {
-        if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, 0) == null)
-          this.moveLeft = 1;
-      }
-
     }
 
     if (key === 'd')
     {
-      if (this.monster.onX == 1) {
-        if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, 0) != null)
-        this.moveRight = 1;
-      }
-      else {
-        if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, 0) == null)
+        if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, this.player.direction) != null)
           this.moveRight = 1;
-      }
     }
 
     if (key === 's')
