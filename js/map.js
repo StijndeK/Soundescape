@@ -128,7 +128,7 @@ class TileMap
   {
     let x = floor((px + TILE_SIZE * 0.5) / TILE_SIZE);
     let y = floor((py + TILE_SIZE * 0.5) / TILE_SIZE);
-    return this.getAdjacentTile(new Coord(x, y));
+    return this.getAdjacentTile(new Coord(x, y), direction);
   }
 
   // Add a tile and return the tile
