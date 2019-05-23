@@ -46,7 +46,7 @@ function draw()
     background(0);
 
     imageMode(LEFT);
-    image(this.backImg, 0, 0, width, height);
+    image(this.backImg, width/8, 0, width/8*6, height);
 
     textSize(width/50);
     textAlign(CENTER);
@@ -54,7 +54,6 @@ function draw()
     text('DB-GAST', width/2, 50);
     text('SOUNDESCAPE', width/2, 100);
     text('Druk op s om te beginnen', width/2, 150);
-
 
   }
 
