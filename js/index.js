@@ -26,11 +26,17 @@ function setup()
   game = new Gameplay(questions);
 
   this.drawGame = 0;
+
+  this.backImg = loadImage('assets/LUMC Concept Art.png');
+
 }
 
 // Draw function
 function draw()
 {
+
+
+
   if (this.drawGame == 1) {
     game.update();
     game.draw();
@@ -39,14 +45,19 @@ function draw()
     // instructions etcetera
     background(0);
 
+    imageMode(LEFT);
+    image(this.backImg, 0, 0, width, height);
+
     textSize(width/50);
     textAlign(CENTER);
-    fill(255, 255, 255);
+    fill(0, 0, 0);
     text('DB-GAST', width/2, 50);
     text('SOUNDESCAPE', width/2, 100);
     text('Druk op s om te beginnen', width/2, 150);
-    text('(conceptart achtergrond)', width/2, 200);
+
+
   }
+
 }
 
 
