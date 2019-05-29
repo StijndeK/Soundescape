@@ -6,6 +6,9 @@ class Gameplay
   {
     frameRate(60);
 
+    // check if screen is turned
+    this.turned = 0;
+
     // Initialize questions
     this.questions = questions;
     this.currentQuestion = 0;
@@ -34,7 +37,7 @@ class Gameplay
     // sounds
     this.gameOverSound = loadSound('assets/gameOver.wav');
     this.levelMusic = loadSound('assets/beat.wav');
-    this.levelMusic.setVolume(0.2);
+    this.levelMusic.setVolume(0.05);
   }
 
 
@@ -49,7 +52,7 @@ class Gameplay
       textSize(width/8);
       text('GAME OVER', 0 ,height/2);
       text(this.score, 0, height/4*3);
-
+      text('press r to play again', 0, height/4);
     }
     else {
       // Begin drawing the camera
@@ -128,9 +131,6 @@ class Gameplay
   // Update function
   update()
   {
-    // print(this.monster.y, playerY);
-    // print(this.monster.x, playerX);
-
     // Update the camera
     this.camera.update();
 
@@ -159,59 +159,6 @@ class Gameplay
     if (playerX <= this.monster.x + 2 && playerX >= this.monster.x - 2 && playerY <= this.monster.y + 2 && playerY >= this.monster.y - 2) {
       this.gameOver = 1;
       this.gameOverSound.play();
-    }
-
-    // check movement is possible, awnser question and move
-    if (this.moveLeft === 1) {
-      // give awnser
-      this.questions[this.currentQuestion].answer(0);
-
-      // move monster
-      if (this.questions[this.currentQuestion].getAnswer() == 0) {
-        print('MOVEDOWN')
-        this.monster.moveDown();
-        this.rightAwnsers++;
-      }
-      else {
-        print('MOVEUP')
-        this.monster.moveUp();
-        this.wrongAwnsers++;
-      }
-
-      // next question
-      this.currentQuestion++;
-
-      // Rotate the player
-      this.player.moveLeft();
-      this.monster.moveLeft();
-
-      this.moveLeft = 0;
-    }
-
-    if (this.moveRight === 1) {
-      // give awnser
-      this.questions[this.currentQuestion].answer(1);
-
-      // move monster
-      if (this.questions[this.currentQuestion].getAnswer() == 1) {
-        print('MOVEDOWN')
-        this.monster.moveDown();
-        this.rightAwnsers++;
-      }
-      else {
-        print('MOVEUP')
-        this.monster.moveUp();
-        this.wrongAwnsers++;
-      }
-
-      // next question
-      this.currentQuestion++;
-
-      // Rotate the player
-      this.player.moveRight();
-      this.monster.moveRight();
-
-      this.moveRight = 0;
     }
 
     /*// check movement
@@ -252,6 +199,11 @@ class Gameplay
     this.question = this.questions[this.currentQuestion];
     this.question.sampleInterval = int(60 / this.speedVar);*/
 
+    // check if a decision is made, otherwise game over
+    if (this.playerTile == null) {
+      this.gameOver = 1;
+    }
+
     // Update the question
     this.question = this.questions[this.currentQuestion];
     this.question.sampleInterval = 50;
@@ -260,18 +212,61 @@ class Gameplay
   // Key press event
   keyPressed()
   {
-
-
     if (key === 'a')
     {
-      if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, this.player.direction) != null)
-          this.moveLeft = 1;
+      // move left if possible
+      if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, this.player.direction) != null) {
+
+        // give awnser
+        this.questions[this.currentQuestion].answer(0);
+
+        // move monster
+        if (this.questions[this.currentQuestion].getAnswer() == 0) {
+          print('MOVEDOWN')
+          this.monster.moveDown();
+          this.rightAwnsers++;
+        }
+        else {
+          print('MOVEUP')
+          this.monster.moveUp();
+          this.wrongAwnsers++;
+        }
+
+        // next question
+        this.currentQuestion++;
+
+        // Rotate the player
+        this.player.moveLeft();
+        this.monster.moveLeft();
+      }
     }
 
     if (key === 'd')
     {
-        if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, this.player.direction) != null)
-          this.moveRight = 1;
+      // move right if possible
+        if (this.map.getPlayerAdjacentTile(this.player.x, this.player.y, this.player.direction) != null) {
+
+          // give awnser
+          this.questions[this.currentQuestion].answer(1);
+
+          // move monster
+          if (this.questions[this.currentQuestion].getAnswer() == 1) {
+            print('MOVEDOWN')
+            this.monster.moveDown();
+            this.rightAwnsers++;
+          }
+          else {
+            print('MOVEUP')
+            this.monster.moveUp();
+            this.wrongAwnsers++;
+          }
+          // next question
+          this.currentQuestion++;
+
+          // Rotate the player
+          this.player.moveRight();
+          this.monster.moveRight();
+        }
     }
 
     if (key === 's')
@@ -285,6 +280,11 @@ class Gameplay
     {
       // when wrong awnser
       this.monster.moveUp();
+    }
+    if (key === 'r')
+    {
+      // refresh
+      window.location.reload();
     }
     /*
     // check if movement is possible
@@ -331,10 +331,19 @@ class Gameplay
   {
     let newTiles = [];
 
-    // Add base
-    for (let i = 0; i < baseLength + 1; i ++)
-      newTiles.push(new Tile(position.add({x: 0, y: i, direction: direction})));
+    // set fasing
+    fased = (this.turned == 0) ? ((this.onX == 1) ? 1 : 0) : ((this.onX == 1) ? 0 : 1)
 
+    // Add base
+    for (let i = 0; i < baseLength + 1; i ++) {
+      newTiles.push(new Tile(position.add({x: 0, y: i, direction: direction})));
+      // TODO teken muur
+      // newTiles.push(new Tile(position.add({x: 1, y: i, direction: direction})));
+      // newTiles.push(new Tile(position.add({x: -1, y: i, direction: direction})));
+    }
+
+    // set fasing
+    fased = (this.turned == 0) ? ((this.onX == 1) ? 0 : 1) : ((this.onX == 1) ? 1 : 0)
     // Add first branches with triggers
     let leftPosition = position.add({x: -1, y: baseLength, direction: direction});
     let leftNewPosition = position.add({x: -(baseWidth + 1), y: baseLength, direction: direction});
@@ -349,6 +358,9 @@ class Gameplay
       this.generateQuestion(rightNewPosition, Direction.right(direction));
       this.map.removeTiles(newTiles);
     }));
+
+    // update turned
+    this.turned = (this.turned == 0) ? 1 : 0;
 
     // Add branches
     for (let i = 1; i < baseWidth; i ++)

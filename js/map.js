@@ -1,5 +1,6 @@
 // Constants
 const TILE_SIZE = 64;
+let fased = 0;
 
 //------------------------------------------------------------------------------
 
@@ -10,6 +11,7 @@ class Tile
   {
     this.position = position;
     this.trigger = trigger;
+    this.fased = fased;
 
     // Opacity of the tile
     this._opacity = 0.0;
@@ -20,21 +22,26 @@ class Tile
     this._remove = false;
 
     this.imgValue = int(random(3));
-    this.imgPath = 'assets/Road Tile 1.png'
-    this.imgPath = 'assets/Road Tile 2.png'
-    this.imgPath = 'assets/Road Tile 3.png'
 
-    switch(this.imgValue) {
-      case 0:
-        this.imgPath = 'assets/Road Tile 1.png'
-          break;
-      case 1:
-        this.imgPath = 'assets/Road Tile 2.png'
-        break;
-      case 1:
-        this.imgPath = 'assets/Road Tile 3.png'
-        break;
-      }
+    print('fased', this.fased)
+    if(this.fased === 0) {
+      // switch(this.imgValue) {
+      //   case 0:
+      //     this.imgPath = 'assets/Road Tile 2.png'
+      //       break;
+      //   case 1:
+      //     this.imgPath = 'assets/Road Tile 2.png'
+      //     break;
+      //   case 2:
+      //     this.imgPath = 'assets/Road Tile 3.png'
+      //     break;
+      // }
+      this.imgPath = 'assets/Road Tile 3.png'
+    }
+    else {
+      this.imgPath = 'assets/Road Tile 1.png'
+
+    }
 
     this.img = loadImage(this.imgPath);
     this.tintValue = 255;

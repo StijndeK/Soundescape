@@ -21,9 +21,11 @@ class Character
 
 //------------------------------------------------------------------------------
 
+// deze variabele heb ik dus gebruikt om om direction heen te werken
 let playerY = 0;
 let playerX = 0;
 let newDirection;
+let onX = 1;
 
 // Player class
 class Player extends Character
@@ -31,6 +33,10 @@ class Player extends Character
   constructor(game, x, y)
   {
     super(game, x, y);
+    this.imgPath = 'assets/Player_Stap_1.png'
+    this.playerImg = loadImage(this.imgPath);
+
+    this.angle = 0;
   }
 
   // Draw function
@@ -38,8 +44,10 @@ class Player extends Character
   {
     noStroke();
     fill(color(0, 128, 0));
-    ellipseMode(CENTER);
-    circle(this.x, this.y, 32);
+    imageMode(CENTER);
+
+    // todo rotate in right direction
+    image(this.playerImg, this.x, this.y, 60, 60);
   }
 
   // Update function
@@ -82,15 +90,17 @@ class Monster extends Character
     super(game, x, y, color(255, 0, 0));
     this.onX = 1;
     this.direction == 0;
+    this.imgPath = 'assets/Ghost Character Sheet Stap 2.png'
+    this.monsterImg = loadImage(this.imgPath);
   }
 
   // Draw function
   draw()
   {
     noStroke();
-    fill(color(255, 0, 0));
-    ellipseMode(CENTER);
-    circle(this.x, this.y, 32);
+    fill(color(0, 128, 0));
+    imageMode(CENTER);
+    image(this.monsterImg, this.x, this.y, 60, 60);
   }
 
   // Update function
@@ -127,20 +137,11 @@ class Monster extends Character
   // move closer to player
   moveUp()
   {
-    // check for x or y
-    if (this.onX == 1) {
-      // check for direction
-      if (this.y > playerY)
-        this.y = this.y - 50;
-      else
-        this.y = this.y + 50;
-    }
-    else {
-      if (this.x > playerX)
-        this.x = this.x - 50;
-      else
-        this.x = this.x + 50;
-    }
+    // check for x or y and move monster
+    if (this.onX == 1)
+      this.y = (this.y > playerY) ? this.y - 50 : this.y + 50;
+    else
+      this.x = (this.x > playerX) ? this.x - 50 : this.x + 50
   }
 
   // move further from player
@@ -173,5 +174,6 @@ class Monster extends Character
       this.onX = 1;
       this.yToMove = playerX;
     }
+    onX = this.onX;
   }
 }
