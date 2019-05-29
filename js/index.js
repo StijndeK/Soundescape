@@ -12,6 +12,7 @@ function preload()
   "assets/samples/Klarinet/Klarinet7.wav", "assets/samples/Klarinet/Klarinet8.wav", "assets/samples/Klarinet/Klarinet9.wav",
   "assets/samples/Klarinet/Klarinet10.wav", "assets/samples/Klarinet/Klarinet11.wav", "assets/samples/Klarinet/Klarinet12.wav",
   "assets/samples/Klarinet/Klarinet13.wav"
+  ];
   let tempoSamples = [
   "assets/Tempo 1.wav", "assets/Tempo 2.wav" , "assets/Tempo 3.wav", "assets/Tempo 4.wav", "assets/Tempo 5.wav", "assets/Tempo 6.wav", "assets/Tempo 7.wav", "assets/Tempo 8.wav",
   "assets/Tempo 9.wav", "assets/Tempo 10.wav", "assets/Tempo 11.wav", "assets/Tempo 12.wav", "assets/Tempo 13.wav", "assets/Tempo 14.wav", "assets/Tempo 15.wav", "assets/Tempo 16.wav", "assets/Tempo 17.wav",
