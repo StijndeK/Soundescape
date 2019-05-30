@@ -21,6 +21,7 @@ class Tile
     this._markedForRemoval = false;
     this._remove = false;
 
+    // Sprite
     this.imgValue = int(random(3));
 
     print('fased', this.fased)

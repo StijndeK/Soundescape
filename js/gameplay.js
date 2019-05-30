@@ -1,7 +1,6 @@
 // Gameplay class
 class Gameplay
 {
-
   constructor(questions)
   {
     frameRate(60);

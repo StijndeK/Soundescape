@@ -67,7 +67,6 @@ function draw()
   }
 }
 
-
 // Key press event
 function keyPressed()
 {

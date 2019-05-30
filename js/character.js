@@ -33,27 +33,23 @@ class Player extends Character
   constructor(game, x, y)
   {
     super(game, x, y);
-    this.imgPath = 'assets/Player_Stap_1.png'
-    this.playerImg = loadImage(this.imgPath);
 
-    this.angle = 0;
+    this.sprite = new AnimSprite(["assets/characters/player0.png", "assets/characters/player1.png"], 15);
   }
 
   // Draw function
   draw()
   {
-    noStroke();
-    fill(color(0, 128, 0));
-    imageMode(CENTER);
-
-    // todo rotate in right direction
-    image(this.playerImg, this.x, this.y, 60, 60);
+    this.sprite.draw(this.x, this.y, 60, 60, this.direction.angle - 90);
   }
 
   // Update function
   update()
   {
     super.update();
+
+    this.sprite.update();
+
     playerY = this.y;
     playerX = this.x;
   }
@@ -92,15 +88,14 @@ class Monster extends Character
     this.direction == 0;
     this.imgPath = 'assets/Ghost Character Sheet Stap 2.png'
     this.monsterImg = loadImage(this.imgPath);
+
+    this.sprite = new Sprite("assets/characters/ghost.png");
   }
 
   // Draw function
   draw()
   {
-    noStroke();
-    fill(color(0, 128, 0));
-    imageMode(CENTER);
-    image(this.monsterImg, this.x, this.y, 60, 60);
+    this.sprite.draw(this.x, this.y, 60, 60, this.direction.angle - 90);
   }
 
   // Update function
