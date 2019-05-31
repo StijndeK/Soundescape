@@ -1,10 +1,3 @@
-// Polyfill for always positive modulo for numbers
-Number.prototype.mod = function(n) {
-  return ((this % n) + n) % n;
-};
-
-//------------------------------------------------------------------------------
-
 // Coordinate class
 class Coord
 {
@@ -45,9 +38,11 @@ Coord.ORIGIN = new Coord(0, 0);
 // Direction class
 class Direction
 {
-  constructor(angle, transform)
+  constructor(x, y, transform)
   {
-    this.angle = angle;
+    this.x = x;
+    this.y = y;
+    this.angle = (-(Math.atan2(y, x) * 180/Math.PI)).mod(360);
     this.transform = transform;
   }
 
@@ -73,10 +68,10 @@ class Direction
 }
 
 // Direction definitions
-Direction.EAST = new Direction(0, c => new Coord(c.y, -c.x));
-Direction.NORTH = new Direction(90, c => new Coord(-c.x, -c.y));
-Direction.WEST = new Direction(180, c => new Coord(-c.y, c.x));
-Direction.SOUTH = new Direction(270, c => new Coord(c.x, c.y));
+Direction.EAST = new Direction(1, 0, c => new Coord(c.y, -c.x));
+Direction.NORTH = new Direction(0, -1, c => new Coord(-c.x, -c.y));
+Direction.WEST = new Direction(-1, 0, c => new Coord(-c.y, c.x));
+Direction.SOUTH = new Direction(0, 1, c => new Coord(c.x, c.y));
 
 // Array of directions
 Direction._array = [Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH];

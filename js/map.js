@@ -37,10 +37,10 @@ class Tile
       //     this.imgPath = 'assets/Road Tile 3.png'
       //     break;
       // }
-      this.imgPath = 'assets/Road Tile 3.png'
+      this.imgPath = 'assets/tiles/road0rotated.png'
     }
     else {
-      this.imgPath = 'assets/Road Tile 1.png'
+      this.imgPath = 'assets/tiles/road0.png'
 
     }
 

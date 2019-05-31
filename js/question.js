@@ -4,13 +4,11 @@ class Question
   // Constructor
   constructor(samples, correctAnswer)
   {
-    //
     if (!(samples instanceof Array))
       throw "samples must be an array";
 
     // Constructor variables
-    this.sampleNames = samples;
-    this.samples = samples.map(sample => loadSound(sample));
+    this.samples = samples;
     this.correctAnswer = correctAnswer;
 
     // Internal variables
