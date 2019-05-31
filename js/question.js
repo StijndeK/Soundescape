@@ -38,7 +38,7 @@ class Question
   }
 
   // Update logic
-  draw()
+  update()
   {
     // Print if timer is 0
     if (this.timer == 0)
@@ -46,23 +46,16 @@ class Question
 
     // After one second: play the first sample
     if (this.timer == this.sampleInterval)
-    {
-      console.log("Playing sample: " + this.sampleNames[0]);
       this.samples[0].play();
-    }
 
     // After two seconds: play the second sample
     if (this.timer == this.sampleInterval * 2)
-    {
-      console.log("Playing sample: " + this.sampleNames[1]);
       this.samples[1].play();
-    }
 
     // If the question has been answered: play the correct sample
     if (this.givenAnswer !== this.lastGivenAnswer && this.givenAnswer !== null)
     {
       // this doesnt work because question gets updated
-      console.log("Playing correct sample: " + this.sampleNames[this.correctAnswer]);
       this.samples[this.correctAnswer].play();
 
       // reset timer

@@ -1,17 +1,83 @@
 // Constants
 const TILE_SIZE = 64;
-let fased = 0;
+
+//------------------------------------------------------------------------------
+
+// Tile type class
+class TileType
+{
+  constructor(solid, imagePath)
+  {
+    this.solid = solid;
+    this.imagePath = imagePath;
+    this.image = null;
+  }
+
+  // Load an image
+  loadImage()
+  {
+    if (this.imagePath instanceof Array)
+      this.image = loadImage(this.imagePath.random());
+    else
+      this.image = loadImage(this.imagePath);
+  }
+
+  // Draw the image
+  drawImage(x, y)
+  {
+    if (this.image === null)
+      this.loadImage();
+
+    imageMode(CENTER);
+    image(this.image, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+  }
+}
+
+// Tile type definitions
+TileType.ROAD_X = new TileType(false, ["assets/tiles/road0x_128.png", "assets/tiles/road1x_128.png"]);
+TileType.ROAD_Y = new TileType(false, ["assets/tiles/road0y_128.png", "assets/tiles/road1y_128.png"]);
+TileType.SPLIT_EAST = new TileType(false, ["assets/tiles/road0x_128.png", "assets/tiles/road1x_128.png"]);
+TileType.SPLIT_NORTH = new TileType(false, ["assets/tiles/road0y_128.png", "assets/tiles/road1y_128.png"]);
+TileType.SPLIT_WEST = new TileType(false, ["assets/tiles/road0x_128.png", "assets/tiles/road1x_128.png"]);
+TileType.SPLIT_SOUTH = new TileType(false, ["assets/tiles/road0y_128.png", "assets/tiles/road1y_128.png"]);
+TileType.WALL = new TileType(true, "assets/tiles/wall_128.png");
+
+// Get road type for direction
+TileType.roadFor = function(direction)
+{
+  if (direction.x !== 0 & direction.y === 0)
+    return TileType.ROAD_X;
+  else if (direction.y !== 0 & direction.x === 0)
+    return TileType.ROAD_Y;
+  else
+    throw new Error('The direction is not supported: ' + direction);
+}
+
+// Get split type for direction
+TileType.splitFor = function(direction)
+{
+  if (direction === Direction.EAST)
+    return TileType.SPLIT_EAST;
+  else if (direction === Direction.NORTH)
+    return TileType.SPLIT_NORTH;
+  else if (direction === Direction.WEST)
+    return TileType.SPLIT_WEST;
+  else if (direction === Direction.SOUTH)
+    return TileType.SPLIT_SOUTH;
+    else
+      throw new Error('The direction is not supported: ' + direction);
+}
 
 //------------------------------------------------------------------------------
 
 // Tile class
 class Tile
 {
-  constructor(position, trigger = null)
+  constructor(position, type, trigger = null)
   {
     this.position = position;
+    this.type = type;
     this.trigger = trigger;
-    this.fased = fased;
 
     // Opacity of the tile
     this._opacity = 0.0;
@@ -20,56 +86,19 @@ class Tile
     // Boolean if the tile should be removed
     this._markedForRemoval = false;
     this._remove = false;
-
-    // Sprite
-    this.imgValue = int(random(3));
-
-    print('fased', this.fased)
-    if(this.fased === 0) {
-      // switch(this.imgValue) {
-      //   case 0:
-      //     this.imgPath = 'assets/Road Tile 2.png'
-      //       break;
-      //   case 1:
-      //     this.imgPath = 'assets/Road Tile 2.png'
-      //     break;
-      //   case 2:
-      //     this.imgPath = 'assets/Road Tile 3.png'
-      //     break;
-      // }
-      this.imgPath = 'assets/tiles/road0rotated.png'
-    }
-    else {
-      this.imgPath = 'assets/tiles/road0.png'
-
-    }
-
-    this.img = loadImage(this.imgPath);
-    this.tintValue = 255;
   }
 
   // Draw function
   draw()
   {
-    noStroke();
-
-    if ((this.position.y % 2 + this.position.x) % 2 === 0)
-      fill(255, 255, 255, this._opacity * 255.0);
-    else
-      fill(240, 240, 240, this._opacity * 255.0);
-
-    imageMode(CENTER);
-    // tint for opacity
-    image(this.img, this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+    //tint(int(this.opacity * 256.0));
+    this.type.drawImage(this.position.x, this.position.y);
   }
 
   // Update function
   update()
   {
     // Update the opacity
-    // this.tintValue -= 100;
-    // tint(255, this.tintValue);
-
     this._opacity += this._opacityVelocity;
     if (this._opacity <= 0.0)
     {

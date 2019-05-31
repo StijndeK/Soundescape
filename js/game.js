@@ -20,6 +20,10 @@ class Game
     this.monsterDistance = 100;
     this.monster = new Monster(this, 0, this.monsterDistance);
 
+    // Tile variables
+    this.playerTile = null
+    this.lastPlayerTile = null;
+
     // Generate the first question
     this.generateQuestion(Coord.ORIGIN, Direction.NORTH);
 
@@ -85,7 +89,7 @@ class Game
     this.monster.update();
 
     // Update velocity of the monster
-    if (this.monster.manhattanDistanceTo(this.player) === this.monsterDistance)
+    if (abs(this.monsterDistance - this.monster.manhattanDistanceTo(this.player)) <= this.monster.velocity)
       this.monster.velocity = 2;
 
     // Update direction of the monster
@@ -107,17 +111,32 @@ class Game
     this.camera.x = -this.player.x;
     this.camera.y = -this.player.y;
 
+    // Update current tile
+    this.playerTile = this.map.getPlayerTile(this.player.x, this.player.y);
+    if (this.playerTile !== this.lastPlayerTile)
+    {
+      // Trigger current tile
+      if (this.playerTile !== null && this.playerTile.trigger !== null)
+        this.playerTile.trigger(this.playerTile);
+
+      // Update score
+      if (!this.gameOver)
+        this.score ++;
+    }
+    this.lastPlayerTile = this.playerTile;
+
     // Check monster on player
-    if (this.monster.manhattanDistanceTo(this.player) <= this.monster.velocity)
+    if (this.monster.manhattanDistanceTo(this.player) <= this.monster.velocity * 2)
       this.gameOver = true;
 
     // Check if a decision is made, otherwise game over
-    if (this.map.getPlayerTile(this.player.x, this.player.y) == null)
+    if (this.playerTile == null)
       this.gameOver = true;
 
     // Update the question
     this.question = this.questions[this.currentQuestion];
     this.question.sampleInterval = 50;
+    this.question.update();
   }
 
   // Key press event
@@ -127,7 +146,7 @@ class Game
     {
       // Move left if possible
       let tile = this.map.getPlayerAdjacentTile(this.player.x, this.player.y, this.player.direction);
-      if (tile != null)
+      if (tile != null && !tile.type.solid)
       {
         // Give answer and move monster
         let correct = this.questions[this.currentQuestion].answer(0);
@@ -157,7 +176,7 @@ class Game
     {
       // Move right if possible
       let tile = this.map.getPlayerAdjacentTile(this.player.x, this.player.y, this.player.direction);
-      if (tile != null)
+      if (tile != null && !tile.type.solid)
       {
         // Give answer and move monster
         let correct = this.questions[this.currentQuestion].answer(1);
@@ -201,39 +220,16 @@ class Game
   {
     this.monsterDistance -= 50;
     this.monster.velocity = 4;
-    /*let monsterPosition = this.monster.direction.transform(0, -50);
-    this.monster.x += monsterPosition.x;
-    this.monster.y += monsterPosition.y;*/
-
-    /*// Check for x or y and move monster
-    if (this.onX == 1)
-      this.monster.y = (this.monster.y > this.player.y) ? this.monster.y - 50 : this.monster.y + 50;
-    else
-      this.monster.x = (this.monster.x > this.player.x) ? this.monster.x - 50 : this.monster.x + 50;*/
   }
 
   // Move the monster further away
   moveMonsterDown()
   {
-    this.monsterDistance += 50;
-    this.monster.velocity = 0.5;
-    /*let monsterPosition = this.monster.direction.transform(0, 50);
-    this.monster.x += monsterPosition.x;
-    this.monster.y += monsterPosition.y;*/
-    /*if (this.onX == 1) {
-      // Check for direction and max reached
-      if (this.monster.y > this.player.y && this.monster.y < this.player.y + 99)
-        this.monster.y = this.monster.y + 50;
-      else if (this.monster.y < this.player.x && this.monster.y > this.player.y - 99)
-        this.monster.y = this.monster.y - 50;
+    if (this.monsterDistance < 150)
+    {
+      this.monsterDistance += 50;
+      this.monster.velocity = 1;
     }
-    else {
-      // Check for direction and max reached
-      if (this.monster.x > this.player.x && this.monster.x < this.player.x + 99)
-        this.monster.x = this.monster.x + 50;
-      else if (this.monster.x < this.player.x && this.monster.x > this.player.x - 99)
-        this.monster.x = this.monster.x - 50;
-    }*/
   }
 
   // Generate a new question
@@ -241,43 +237,53 @@ class Game
   {
     let newTiles = [];
 
-    // set fasing
-    fased = (this.turned == 0) ? ((this.onX == 1) ? 1 : 0) : ((this.onX == 1) ? 0 : 1)
-
     // Add base
-    for (let i = 0; i < baseLength + 1; i ++) {
-      newTiles.push(new Tile(position.add({x: 0, y: i, direction: direction})));
-      // TODO teken muur
-      // newTiles.push(new Tile(position.add({x: 1, y: i, direction: direction})));
-      // newTiles.push(new Tile(position.add({x: -1, y: i, direction: direction})));
+    for (let i = 0; i < baseLength; i ++)
+    {
+      // Road
+      newTiles.push(new Tile(position.add({x: 0, y: i, direction: direction}), TileType.roadFor(direction)));
+
+      // Wall
+      newTiles.push(new Tile(position.add({x: 1, y: i, direction: direction}), TileType.WALL));
+      newTiles.push(new Tile(position.add({x: -1, y: i, direction: direction}), TileType.WALL));
     }
 
-    // set fasing
-    fased = (this.turned == 0) ? ((this.onX == 1) ? 0 : 1) : ((this.onX == 1) ? 1 : 0);
+    // Add split road
+    newTiles.push(new Tile(position.add({x: 0, y: baseLength, direction: direction}), TileType.splitFor(direction)));
+
+    // Add split walls
+    for (let i = -1; i <= 1; i ++)
+      newTiles.push(new Tile(position.add({x: i, y: baseLength + 1, direction: direction}), TileType.WALL));
 
     // Add first branches with triggers
+    let leftDirection = Direction.left(direction);
     let leftPosition = position.add({x: -1, y: baseLength, direction: direction});
     let leftNewPosition = position.add({x: -(baseWidth + 1), y: baseLength, direction: direction});
-    newTiles.push(new Tile(leftPosition, tile => {
-      this.generateQuestion(leftNewPosition, Direction.left(direction));
+    newTiles.push(new Tile(leftPosition, TileType.roadFor(leftDirection), tile => {
+      this.generateQuestion(leftNewPosition, leftDirection);
       this.map.removeTiles(newTiles);
     }));
 
+    let rightDirection = Direction.right(direction);
     let rightPosition = position.add({x: 1, y: baseLength, direction: direction});
     let rightNewPosition = position.add({x: baseWidth + 1, y: baseLength, direction: direction});
-    newTiles.push(new Tile(rightPosition, tile => {
-      this.generateQuestion(rightNewPosition, Direction.right(direction));
+    newTiles.push(new Tile(rightPosition, TileType.roadFor(rightDirection), tile => {
+      this.generateQuestion(rightNewPosition, rightDirection);
       this.map.removeTiles(newTiles);
     }));
-
-    // update turned
-    this.turned = 1 - this.turned;
 
     // Add branches
     for (let i = 1; i < baseWidth; i ++)
     {
-      newTiles.push(new Tile(position.add({x: i + 1, y: baseLength, direction: direction})));
-      newTiles.push(new Tile(position.add({x: -(i + 1), y: baseLength, direction: direction})));
+      // Roads
+      newTiles.push(new Tile(position.add({x: i + 1, y: baseLength, direction: direction}), TileType.roadFor(leftDirection)));
+      newTiles.push(new Tile(position.add({x: -(i + 1), y: baseLength, direction: direction}), TileType.roadFor(rightDirection)));
+
+      // Walls
+      newTiles.push(new Tile(position.add({x: i + 1, y: baseLength - 1, direction: direction}), TileType.WALL));
+      newTiles.push(new Tile(position.add({x: i + 1, y: baseLength + 1, direction: direction}), TileType.WALL));
+      newTiles.push(new Tile(position.add({x: -(i + 1), y: baseLength - 1, direction: direction}), TileType.WALL));
+      newTiles.push(new Tile(position.add({x: -(i + 1), y: baseLength + 1, direction: direction}), TileType.WALL));
     }
 
     // Add the tiles

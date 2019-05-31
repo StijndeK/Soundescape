@@ -10,3 +10,9 @@ Array.range = function(min, max) {
     a.push(i);
   return a;
 };
+
+// Polyfill for random value of array
+Array.prototype.random = function()
+{
+  return this[Math.floor(Math.random() * this.length)];
+}
