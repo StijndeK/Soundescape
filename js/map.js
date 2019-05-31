@@ -13,23 +13,13 @@ class TileType
     this.image = null;
   }
 
-  // Load an image
-  loadImage()
+  // Get an image
+  getImage()
   {
     if (this.imagePath instanceof Array)
-      this.image = loadImage(this.imagePath.random());
+      return loadImage(this.imagePath.random());
     else
-      this.image = loadImage(this.imagePath);
-  }
-
-  // Draw the image
-  drawImage(x, y)
-  {
-    if (this.image === null)
-      this.loadImage();
-
-    imageMode(CENTER);
-    image(this.image, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+      return loadImage(this.imagePath);
   }
 }
 
@@ -64,8 +54,8 @@ TileType.splitFor = function(direction)
     return TileType.SPLIT_WEST;
   else if (direction === Direction.SOUTH)
     return TileType.SPLIT_SOUTH;
-    else
-      throw new Error('The direction is not supported: ' + direction);
+  else
+    throw new Error('The direction is not supported: ' + direction);
 }
 
 //------------------------------------------------------------------------------
@@ -78,6 +68,9 @@ class Tile
     this.position = position;
     this.type = type;
     this.trigger = trigger;
+
+    // Sprite
+    this.image = this.type.getImage();
 
     // Opacity of the tile
     this._opacity = 0.0;
@@ -92,7 +85,8 @@ class Tile
   draw()
   {
     //tint(int(this.opacity * 256.0));
-    this.type.drawImage(this.position.x, this.position.y);
+    imageMode(CENTER);
+    image(this.image, this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
 
   // Update function
