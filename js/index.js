@@ -15,6 +15,7 @@ let overtoneSamples = Array.range(1, 26).map(i => "assets/samples/Boventonen/Bov
 
 // Other sounds
 let gameOverSound;
+let menuSound;
 
 // selected game
 let selectedGameChoice;
@@ -31,6 +32,8 @@ function preload()
 
   // Load other sounds
   gameOverSound = loadSound('assets/gameOver.wav');
+  menuSound = loadSound('assets/LUMC_MenuTrack.wav');
+
 
   // Initialize questions
   pitchQuestions = Question.generatePitchQuestions(20, pitchSamplesKlarinet);

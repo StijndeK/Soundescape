@@ -13,8 +13,6 @@ class GameOver
 
     // Sounds
     gameOverSound.play();
-
-    print(selectedGameChoice)
   }
 
   // Draw function

@@ -6,6 +6,9 @@ class Menu
     // Load background image
     this.image = loadImage('assets/menu.png');
     this.selectedGame = null;
+
+    // Sounds
+    menuSound.play();
   }
 
   // Draw function
@@ -47,5 +50,7 @@ class Menu
       this.selectedGame = 2;
     if (key === '3')
       this.selectedGame = 3;
+
+    menuSound.stop();
   }
 }
