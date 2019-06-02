@@ -154,15 +154,19 @@ class Game
         {
           this.moveMonsterDown();
           this.rightAnswers ++;
+
+          // Next question
+          if (this.currentQuestion != 19)
+            this.currentQuestion++;
+            // go faster when all questions have already been awnsered
+            if (this.question.sampleInterval != 50)
+              this.question.sampleInterval = this.question.sampleInterval - 5;
         }
         else
         {
           this.moveMonsterUp();
           this.wrongAnswers ++;
         }
-
-        // Next question
-        this.currentQuestion++;
 
         // Rotate the player
         this.player.moveLeft();
@@ -184,15 +188,19 @@ class Game
         {
           this.moveMonsterDown();
           this.rightAnswers ++;
+
+          // Next question
+          if (this.currentQuestion != 19)
+            this.currentQuestion++;
+            // go faster when all questions have already been awnsered
+            if (this.question.sampleInterval != 50)
+              this.question.sampleInterval = this.question.sampleInterval - 5;
         }
         else
         {
           this.moveMonsterUp();
           this.wrongAnswers ++;
         }
-
-        // Next question
-        this.currentQuestion++;
 
         // Rotate the player
         this.player.moveRight();
@@ -233,7 +241,7 @@ class Game
   }
 
   // Generate a new question
-  generateQuestion(position, direction, baseLength = 6, baseWidth = 2)
+  generateQuestion(position, direction, baseLength = 10, baseWidth = 2)
   {
     let newTiles = [];
 

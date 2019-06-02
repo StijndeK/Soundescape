@@ -1,21 +1,23 @@
 // Questions
-let questions;
+let pitchQuestions, overtoneQuestions, tempoQuestions;
 
 // The active screen
 let activeScreen = null;
 
 // Samples for pitch
-let pitchSamplesFagot = Array.range(48, 60).map(i => "assets/samples/pitch/Fagot/Fagot" + i + ".wav");
-let pitchSamplesHobo = Array.range(60, 72).map(i => "assets/samples/pitch/Hobo/Hobo" + i + ".wav");
-let pitchSamplesKlarinet = Array.range(60, 72).map(i => "assets/samples/pitch/Klarinet/Klarinet" + i + ".wav");
-let pitchSamplesSawtooth = Array.range(48, 72).map(i => "assets/samples/pitch/Sawtooth/Sawtooth" + i + ".wav");
-let pitchSamplesStrijkers = Array.range(60, 72).map(i => "assets/samples/pitch/Strijkers/Strijkers" + i + ".wav");
+let pitchSamplesKlarinet = Array.range(1, 72).map(i => "assets/samples/Toonhoogte/Klarinet " + i + ".wav");
 
 // Samples for tempo
 let tempoSamples = Array.range(1, 44).map(i => "assets/samples/tempo/Tempo " + i + ".wav");
 
+// Samples for overtones
+let overtoneSamples = Array.range(1, 26).map(i => "assets/samples/Boventonen/Boventonen " + i + ".wav");
+
 // Other sounds
 let gameOverSound;
+
+// selected game
+let selectedGameChoice;
 
 // Preload function
 function preload()
@@ -23,18 +25,17 @@ function preload()
   soundFormats('wav', 'mp3');
 
   // Load samples
-  pitchSamplesFagot = pitchSamplesFagot.map(path => loadSound(path));
-  pitchSamplesHobo = pitchSamplesHobo.map(path => loadSound(path));
   pitchSamplesKlarinet = pitchSamplesKlarinet.map(path => loadSound(path));
-  pitchSamplesSawtooth = pitchSamplesSawtooth.map(path => loadSound(path));
-  pitchSamplesStrijkers = pitchSamplesStrijkers.map(path => loadSound(path));
   tempoSamples = tempoSamples.map(path => loadSound(path));
+  overtoneSamples = overtoneSamples.map(path => loadSound(path));
 
   // Load other sounds
   gameOverSound = loadSound('assets/gameOver.wav');
 
   // Initialize questions
-  questions = Question.generatePitchQuestions(10, pitchSamplesKlarinet);
+  pitchQuestions = Question.generatePitchQuestions(20, pitchSamplesKlarinet);
+  overtoneQuestions = Question.generateOvertoneQuestions(20, overtoneSamples);
+  tempoQuestions = Question.generateTempoQuestions(20, tempoSamples);
 }
 
 // Setup function
@@ -59,14 +60,19 @@ function draw()
   // Update states
   if (activeScreen instanceof Menu)
   {
-    // TODO: Add other game types
+    selectedGameChoice = activeScreen.selectedGame;
     if (activeScreen.selectedGame === 1)
-      activeScreen = new Game(questions);
+      activeScreen = new Game(pitchQuestions);
+    else if (activeScreen.selectedGame === 2)
+      activeScreen = new Game(tempoQuestions);
+    else if (activeScreen.selectedGame === 3)
+      activeScreen = new Game(overtoneQuestions);
   }
   else if (activeScreen instanceof Game)
   {
-    if (activeScreen.gameOver)
+    if (activeScreen.gameOver) {
       activeScreen = new GameOver(activeScreen);
+    }
   }
   else if (activeScreen instanceof GameOver)
   {

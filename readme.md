@@ -4,10 +4,13 @@
 - ~~add wall next to path~~
 
 Verdere TODO:
-- add levels
-- generate data from game for research
-- add all sounds
 - add further art
+
+---
+
+NOTES:
+- wanneer een vraag nu fout wordt beantwoord herhaalt ie totdat je gameover bent of het goed hebt. Eigenlijk zou je willen dat er een vraag met hetzelfde interval wordt gegenereerd
+- wanneer je bij de moeilijkste graag aan komt blijft hij herhalen, je zou dan ook willen dat met hetzelfde interval wordt gegenereerd
 
 ---
 
@@ -20,5 +23,5 @@ Verdere TODO:
 - Menu en GameOver heb ik in aparte scripts gezet en in index.js een soort screen-systeem gemaakt.
 
 Nog te doen wat mij inviel:
-- Als alle vragen zijn beantwoord, krijg je nu errors
+- ~~Als alle vragen zijn beantwoord, krijg je nu errors~~
 - Als gedraaid dan is de framerate lager??
