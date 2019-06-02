@@ -44,7 +44,7 @@ class GameOver
     if (selectedGameChoice === 1)
       justNoticableDifference = ['Just noticable difference: ', pitchIntervals[this.currentQuestion] * 5, 'Hz'];
     else if (selectedGameChoice === 2)
-      justNoticableDifference = ['Just noticable difference: ', tempoIntervals[this.currentQuestion], 'bpm'];
+      justNoticableDifference = ['Just noticable difference: ', tempoIntervals[this.currentQuestion] * 50, 'ms'];
     else if (selectedGameChoice === 3)
       justNoticableDifference = ['Just noticable difference: ', overtoneIntervals[this.currentQuestion], 'overtone'];
     text(join(justNoticableDifference, separator), width / 2, height/10*4);

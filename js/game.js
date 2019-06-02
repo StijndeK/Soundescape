@@ -62,7 +62,14 @@ class Game
     textAlign(LEFT);
     textSize(width/40);
     fill(255, 255, 255);
-    text('Welke toon klinkt hoger?', 20, 40);
+
+    if (selectedGameChoice === 1)
+      text('Welke toon klinkt hoger?', 20, 40);
+    else if (selectedGameChoice === 2)
+      text('Welke tempo is sneller?', 20, 40);
+    else if (selectedGameChoice === 3)
+      text('Welke toon heeft meer boventonen?', 20, 40);
+
     textSize(width/50);
     textAlign(RIGHT);
     text('SCORE:', width-(width/8), 40);
