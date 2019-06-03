@@ -142,7 +142,7 @@ class Game
 
     // Update the question
     this.question = this.questions[this.currentQuestion];
-    this.question.sampleInterval = 50;
+    this.question.sampleInterval = 40;
     this.question.update();
   }
 
@@ -163,7 +163,7 @@ class Game
           this.rightAnswers ++;
 
           // Next question
-          if (this.currentQuestion != 19)
+          if (this.currentQuestion != questionAmount - 1)
             this.currentQuestion++;
             // go faster when all questions have already been awnsered
             if (this.question.sampleInterval != 50)
@@ -197,7 +197,7 @@ class Game
           this.rightAnswers ++;
 
           // Next question
-          if (this.currentQuestion != 19)
+          if (this.currentQuestion != questionAmount - 1)
             this.currentQuestion++;
             // go faster when all questions have already been awnsered
             if (this.question.sampleInterval != 50)

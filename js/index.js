@@ -20,6 +20,9 @@ let menuSound;
 // selected game
 let selectedGameChoice;
 
+// amount of Questions
+let questionAmount = 30;
+
 // Preload function
 function preload()
 {
@@ -36,9 +39,9 @@ function preload()
 
 
   // Initialize questions
-  pitchQuestions = Question.generatePitchQuestions(20, pitchSamplesKlarinet);
-  overtoneQuestions = Question.generateOvertoneQuestions(20, overtoneSamples);
-  tempoQuestions = Question.generateTempoQuestions(20, tempoSamples);
+  pitchQuestions = Question.generatePitchQuestions(questionAmount, pitchSamplesKlarinet);
+  overtoneQuestions = Question.generateOvertoneQuestions(questionAmount, overtoneSamples);
+  tempoQuestions = Question.generateTempoQuestions(questionAmount, tempoSamples);
 }
 
 // Setup function

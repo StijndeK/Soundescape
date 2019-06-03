@@ -25,3 +25,5 @@ NOTES:
 Nog te doen wat mij inviel:
 - ~~Als alle vragen zijn beantwoord, krijg je nu errors~~
 - Als gedraaid dan is de framerate lager??
+
+---

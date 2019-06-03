@@ -1,7 +1,7 @@
 let pitchIntervals = [];
 let overtoneIntervals = [];
 let tempoIntervals = [];
-
+let pitchList = [];
 
 // Question class
 class Question
@@ -85,8 +85,8 @@ class Question
     {
       // set the notes (samples) based on i
       // todo maybe make this an exponentional system?
-      let sampleArrayValue1 = int(int(random(i+1)) * 3.5); // *3.5 because 70 samples
-      let interVal = int((n - i) * 3.5);
+      let sampleArrayValue1 = int(int(random(i+1)) * 2.333);
+      let interVal = int((n - i) * 2.333);
       let sampleArrayValue2 = sampleArrayValue1 + interVal;
 
       // also create list with sample intervals for showing jnd
@@ -101,6 +101,7 @@ class Question
       let answer = int(samples.indexOf(sample2) > samples.indexOf(sample1));
       questions.push(new Question([sample1, sample2], answer));
     }
+    pitchList = questions;
     return questions;
   }
 
@@ -112,8 +113,8 @@ class Question
     {
       // set the notes (samples) based on i
       // todo maybe make this an exponentional system?
-      let sampleArrayValue1 = int(int(random(i+1)) * 2); // *2 because 40 samples
-      let interVal = int((n - i) * 2);
+      let sampleArrayValue1 = int(int(random(i+1)) * 1.333);
+      let interVal = int((n - i) * 1.333);
       let sampleArrayValue2 = sampleArrayValue1 + interVal;
 
       // also create list with sample intervals for showing jnd
@@ -140,8 +141,8 @@ class Question
     {
       // set the notes (samples) based on i
       // todo maybe make this an exponentional system?
-      let sampleArrayValue1 = int(int(random(i+1)));
-      let interVal = int((n - i));
+      let sampleArrayValue1 = int(int(random(i+1)) * 0.667);
+      let interVal = int((n - i) * 0.667);
       let sampleArrayValue2 = sampleArrayValue1 + interVal;
 
       // also create list with sample intervals for showing jnd
