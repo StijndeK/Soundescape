@@ -36,6 +36,12 @@ class Game
     // Sounds
     this.levelMusic = loadSound('assets/beat.wav');
     this.levelMusic.setVolume(0.05);
+
+    // images
+    this.scoreImage = loadImage('assets/Leeg_Vak.png');
+    this.logoImage = loadImage('assets/Soundescape Logo.png');
+    this.questionImage = loadImage('assets/Leeg_Vak.png');
+
   }
 
   // Draw function
@@ -63,21 +69,34 @@ class Game
     textSize(width/40);
     fill(255, 255, 255);
 
-    if (selectedGameChoice === 1)
-      text('Welke toon klinkt hoger?', 20, 40);
-    else if (selectedGameChoice === 2)
-      text('Welke tempo is sneller?', 20, 40);
-    else if (selectedGameChoice === 3)
-      text('Welke toon heeft meer boventonen?', 20, 40);
+    // logo
+    image(this.logoImage, 0, 0, width/4.5, 180);
 
+    fill(0, 0, 0);
     textSize(width/50);
+
+    // Score
+    imageMode(RIGHT);
+    image(this.scoreImage, width-(width/4.5), 0, width/4.5, 180);
+
+    var rightWrong = ['Right / Wrong: ', this.rightAnswers, '/' , this.wrongAnswers];
+    var score = ['Points:   ', this.score];
     textAlign(RIGHT);
-    text('SCORE:', width-(width/8), 40);
-    text(this.score, width-(width/40), 40);
-    text('RIGHT ANSWERS:', width-(width/8), 80);
-    text(this.rightAnswers, width-(width/40), 80);
-    text('WRONG ANSWERS:', width-(width/8), 120);
-    text(this.wrongAnswers, width-(width/40), 120);
+    text(join(score, ' '), width-(width/40), 50);
+    text(join(rightWrong, ''), width-(width/40), 90);
+
+    // question
+    image(this.questionImage, width/2 - (width/4.5/2) , 0, width/4.5, 90);
+    textSize(width/60);
+
+    textAlign(LEFT);
+    Question
+    if (selectedGameChoice === 1)
+      text('Welke toon klinkt hoger?', width/2 - (width/4.5/2.5), 20, width/4.5, 70);
+    else if (selectedGameChoice === 2)
+      text('Welke tempo is sneller?',  width/2 - (width/4.5/2.5), 20, width/4.5, 70);
+    else if (selectedGameChoice === 3)
+      text('Welke toon heeft meer boventonen?', width/2 - (width/4.5/2.5), 20, width/4.5, 70);
   }
 
   // Update function

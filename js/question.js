@@ -141,8 +141,8 @@ class Question
     {
       // set the notes (samples) based on i
       // todo maybe make this an exponentional system?
-      let sampleArrayValue1 = int(int(random(i+1)) * 0.667);
-      let interVal = int((n - i) * 0.667);
+      let sampleArrayValue1 = int(int(random(i+1)) * 3.333);
+      let interVal = int((n - i) * 3.333);
       let sampleArrayValue2 = sampleArrayValue1 + interVal;
 
       // also create list with sample intervals for showing jnd

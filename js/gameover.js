@@ -13,6 +13,9 @@ class GameOver
 
     // Sounds
     gameOverSound.play();
+
+    // images
+    this.gameOverImage = loadImage('assets/Game Over.png')
   }
 
   // Draw function
@@ -22,20 +25,26 @@ class GameOver
 
     fill(255);
     textAlign(CENTER);
+    imageMode(CENTER);
+
 
     // Game over info
     textSize(width/30);
-    text('GAME OVER', width / 2 ,height/10);
+
+    // image
+    image(this.gameOverImage, width / 2 , height/10*2, width/4.5, height / 3);
+
+
     textSize(width/40);
-    text('Press the r key to play again', width / 2, height/10*2);
+    text('Press the r key to play again', width / 2, height/10*5);
 
     // SCORE
     textSize(width/50);
     var score = ['Score: ', this.score];
     var separator = ' ';
-    text(join(score, separator), width / 2, height/10*3);
+    text(join(score, separator), width / 2, height/10*6);
     var rightWrong = ['Right / Wrong: ', this.right, '/' , this.wrong];
-    text(join(rightWrong, separator), width / 2, height/10*3.5);
+    text(join(rightWrong, separator), width / 2, height/10*6.5);
 
     // JND
     var justNoticableDifference;
@@ -45,7 +54,9 @@ class GameOver
       justNoticableDifference = ['Just noticable difference: ', tempoIntervals[this.currentQuestion] * 50, 'ms'];
     else if (selectedGameChoice === 3)
       justNoticableDifference = ['Just noticable difference: ', overtoneIntervals[this.currentQuestion], 'overtone'];
-    text(join(justNoticableDifference, separator), width / 2, height/10*4);
+    text(join(justNoticableDifference, separator), width / 2, height/10*7);
+
+
   }
 
   // Update function
@@ -58,7 +69,9 @@ class GameOver
   {
     if (key === 'r')
     {
-      this.newGame = true;
+      // werkt niet dus maar voor nu refreshen
+      // this.newGame = true;
+      window.location.reload();
     }
   }
 }

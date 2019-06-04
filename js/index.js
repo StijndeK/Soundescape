@@ -11,7 +11,7 @@ let pitchSamplesKlarinet = Array.range(1, 72).map(i => "assets/samples/Toonhoogt
 let tempoSamples = Array.range(1, 44).map(i => "assets/samples/tempo/Tempo " + i + ".wav");
 
 // Samples for overtones
-let overtoneSamples = Array.range(1, 26).map(i => "assets/samples/Boventonen/Boventonen " + i + ".wav");
+let overtoneSamples = Array.range(1, 100).map(i => "assets/samples/Boventonen/Boventonen " + i + ".wav");
 
 // Other sounds
 let gameOverSound;
