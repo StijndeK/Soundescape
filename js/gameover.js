@@ -34,7 +34,6 @@ class GameOver
     // image
     image(this.gameOverImage, width / 2 , height/10*2, width/4.5, height / 3);
 
-
     textSize(width/40);
     text('Press the r key to play again', width / 2, height/10*5);
 
@@ -53,7 +52,7 @@ class GameOver
     else if (selectedGameChoice === 2)
       justNoticableDifference = ['Just noticable difference: ', tempoIntervals[this.currentQuestion] * 50, 'ms'];
     else if (selectedGameChoice === 3)
-      justNoticableDifference = ['Just noticable difference: ', overtoneIntervals[this.currentQuestion], 'overtone'];
+      justNoticableDifference = ['Just noticable difference: ', overtoneIntervals[this.currentQuestion] * 250, 'Hz'];
     text(join(justNoticableDifference, separator), width / 2, height/10*7);
 
 
