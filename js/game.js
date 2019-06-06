@@ -81,8 +81,8 @@ class Game
     imageMode(RIGHT);
     image(this.scoreImage, width-(width/4.5), 0, width/4.5, 180);
 
-    var rightWrong = ['Right / Wrong: ', this.rightAnswers, '/' , this.wrongAnswers];
-    var score = ['Points:   ', this.score];
+    var rightWrong = ['Goed / Fout: ', this.rightAnswers, '/' , this.wrongAnswers];
+    var score = ['Punten:   ', this.score];
     textAlign(RIGHT);
     text(join(score, ' '), width-(width/40), 50);
     text(join(rightWrong, ''), width-(width/40), 90);
