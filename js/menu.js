@@ -7,6 +7,9 @@ class Menu
     this.image = loadImage('assets/Hoofdscherm.png');
     this.selectedGame = null;
 
+    // load start image
+    this.startImage = loadImage('assets/Leeg_Vak.png');
+
     // Sounds
     menuSound.play();
   }

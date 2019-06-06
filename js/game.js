@@ -275,7 +275,7 @@ class Game
   }
 
   // Generate a new question
-  generateQuestion(position, direction, baseLength = 10, baseWidth = 2)
+  generateQuestion(position, direction, baseLength = 9, baseWidth = 2)
   {
     let newTiles = [];
 
