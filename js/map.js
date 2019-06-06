@@ -29,7 +29,7 @@ TileType.ROAD_Y = new TileType(false, ["assets/tiles/road0y_128.png", "assets/ti
 TileType.SPLIT_EAST = new TileType(false, "assets/tiles/Tsplitsing_Tile_1_x_west.png");
 TileType.SPLIT_NORTH = new TileType(false, "assets/tiles/Tsplitsing_Tile_1_y.png");
 TileType.SPLIT_WEST = new TileType(false, "assets/tiles/Tsplitsing_Tile_1_x_east.png");
-TileType.SPLIT_SOUTH = new TileType(false, "assets/tiles/Tsplitsing_Tile_1_y.png");
+TileType.SPLIT_SOUTH = new TileType(false, "assets/tiles/Tsplitsing_Tile_1_y_south.png");
 TileType.WALL = new TileType(true, "assets/tiles/wall_128.png");
 
 // Get road type for direction

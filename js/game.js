@@ -3,6 +3,9 @@ class Game
 {
   constructor(questions)
   {
+    // movement possible
+    this.moveAble = 1;
+
     // Initialize questions
     this.questions = questions;
     this.currentQuestion = 0;
@@ -41,7 +44,6 @@ class Game
     this.scoreImage = loadImage('assets/Leeg_Vak.png');
     this.logoImage = loadImage('assets/Soundescape Logo.png');
     this.questionImage = loadImage('assets/Leeg_Vak.png');
-
   }
 
   // Draw function
@@ -172,7 +174,7 @@ class Game
     {
       // Move left if possible
       let tile = this.map.getPlayerAdjacentTile(this.player.x, this.player.y, this.player.direction);
-      if (tile != null && !tile.type.solid)
+      if (tile != null && !tile.type.solid && this.moveAble == 1)
       {
         // Give answer and move monster
         let correct = this.questions[this.currentQuestion].answer(0);
@@ -194,6 +196,9 @@ class Game
           this.wrongAnswers ++;
         }
 
+        // player not move moveAble
+        this.moveAble = 0;
+
         // Rotate the player
         this.player.moveLeft();
 
@@ -206,7 +211,7 @@ class Game
     {
       // Move right if possible
       let tile = this.map.getPlayerAdjacentTile(this.player.x, this.player.y, this.player.direction);
-      if (tile != null && !tile.type.solid)
+      if (tile != null && !tile.type.solid && this.moveAble == 1)
       {
         // Give answer and move monster
         let correct = this.questions[this.currentQuestion].answer(1);
@@ -227,6 +232,9 @@ class Game
           this.moveMonsterUp();
           this.wrongAnswers ++;
         }
+
+        // player not move moveAble
+        this.moveAble = 0;
 
         // Rotate the player
         this.player.moveRight();
@@ -319,6 +327,9 @@ class Game
       newTiles.push(new Tile(position.add({x: -(i + 1), y: baseLength - 1, direction: direction}), TileType.WALL));
       newTiles.push(new Tile(position.add({x: -(i + 1), y: baseLength + 1, direction: direction}), TileType.WALL));
     }
+
+    // new movement possible
+    this.moveAble = 1;
 
     // Add the tiles
     this.map.addTiles(newTiles);
