@@ -244,7 +244,7 @@ class Game
       }
     }
 
-    if (key === 's')
+    /*if (key === 's')
     {
       // when right awnser
       this.moveMonsterDown();
@@ -254,7 +254,7 @@ class Game
     {
       // when wrong awnser
       this.moveMonsterUp();
-    }
+    }*/
   }
 
   // Move the monster closer
