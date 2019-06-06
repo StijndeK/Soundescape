@@ -92,7 +92,7 @@ class Game
     textSize(width/60);
 
     textAlign(LEFT);
-    Question
+    
     if (selectedGameChoice === 1)
       text('Welke toon klinkt hoger?', width/2 - (width/4.5/2.5), 20, width/4.5, 70);
     else if (selectedGameChoice === 2)

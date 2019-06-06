@@ -154,7 +154,8 @@ class Question
       let sample1 = samples[sampleArrayValues[decideSample]];
       let sample2 = samples[sampleArrayValues[1-decideSample]];
 
-      let answer = int(samples.indexOf(sample2) > samples.indexOf(sample1));
+      // HIER BOVENTONEN ANTWOORD VERANDEREN!
+      let answer = int(samples.indexOf(sample1) > samples.indexOf(sample2));
       questions.push(new Question([sample1, sample2], answer));
     }
     return questions;
