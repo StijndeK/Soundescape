@@ -257,6 +257,11 @@ class Game
     }*/
   }
 
+  // Mouse press event
+  mousePressed()
+  {
+  }
+
   // Move the monster closer
   moveMonsterUp()
   {

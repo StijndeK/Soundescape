@@ -96,6 +96,12 @@ function keyPressed()
   activeScreen.keyPressed();
 }
 
+// Mouse press event
+function mousePressed()
+{
+  activeScreen.mousePressed();
+}
+
 // Resize function
 function resize()
 {

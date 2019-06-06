@@ -61,7 +61,7 @@ class GameOver
   {
   }
 
-  // Key press function
+  // Key press event
   keyPressed()
   {
     if (key === 'r')
@@ -70,5 +70,10 @@ class GameOver
       // this.newGame = true;
       window.location.reload();
     }
+  }
+
+  // Mouse press event
+  mousePressed()
+  {
   }
 }

@@ -7,8 +7,8 @@ class Menu
     this.image = loadImage('assets/Hoofdscherm.png');
     this.selectedGame = null;
 
-    // load start image
-    this.startImage = loadImage('assets/Leeg_Vak.png');
+    // load button image
+    this.buttonImage = loadImage('assets/Leeg_Vak.png');
 
     // Sounds
     menuSound.play();
@@ -20,20 +20,29 @@ class Menu
     background(0);
 
     // Draw background image
-    let imageWidth = this.image.width / (this.image.width / (width/1.5));
-    let imageHeight = height;
+    this.imageWidth = this.image.width / (this.image.width / (width/1.5));
+    this.imageHeight = height;
+    this.imageX = (width - this.imageWidth) / 2;
 
     imageMode(LEFT);
-    image(this.image, (width - imageWidth) / 2, 0, imageWidth, imageHeight);
+    image(this.image, this.imageX, 0, this.imageWidth, this.imageHeight);
+
+    // Draw buttons
+    this.buttonX = this.imageX + (this.imageWidth / 4);
+
+    imageMode(LEFT);
+    image(this.buttonImage, this.buttonX, (height / 16 * 7), (height / 4), (height / 8));
+    image(this.buttonImage, this.buttonX, (height / 16 * 10), (height / 4), (height / 8));
+    image(this.buttonImage, this.buttonX, (height / 16 * 13), (height / 4), (height / 8));
 
     // Print text
-    let textX = imageWidth + (width - imageWidth)/2 - imageWidth / 32;
+    let textX = this.imageWidth + (width - this.imageWidth)/2 - this.imageWidth / 32;
     textSize(width / 50);
-    textAlign(RIGHT);
+    textAlign(CENTER);
     fill(0, 0, 0);
-    text('Druk op 1 om toonhoogte game te spelen', textX, imageHeight / 32 * 6);
-    text('Druk op 2 om tempo game te spelen', textX, imageHeight / 32 * 7);
-    text('Druk op 3 om boventoon game te spelen', textX, imageHeight / 32 * 8);
+    text('Toonhoogte', this.buttonX + (height / 8), (height / 16 * 8));
+    text('Tempo', this.buttonX + (height / 8), (height / 16 * 11));
+    text('Boventonen', this.buttonX + (height / 8), (height / 16 * 14));
   }
 
   // Update function
@@ -45,13 +54,25 @@ class Menu
   // Key press event
   keyPressed()
   {
-    if (key === '1')
-      this.selectedGame = 1;
-    if (key === '2')
-      this.selectedGame = 2;
-    if (key === '3')
-      this.selectedGame = 3;
+  }
 
-    menuSound.stop();
+  // Mouse press event
+  mousePressed()
+  {
+    if (mouseX >= this.buttonX && mouseX < this.buttonX + (height / 8) && mouseY >= (height / 16 * 7) && mouseY < (height / 16 * 7) + (height / 8))
+    {
+      this.selectedGame = 1;
+      menuSound.stop();
+    }
+    if (mouseX >= this.buttonX && mouseX < this.buttonX + (height / 8) && mouseY >= (height / 16 * 10) && mouseY < (height / 16 * 10) + (height / 8))
+    {
+      this.selectedGame = 2;
+      menuSound.stop();
+    }
+    if (mouseX >= this.buttonX && mouseX < this.buttonX + (height / 8) && mouseY >= (height / 16 * 13) && mouseY < (height / 16 * 13) + (height / 8))
+    {
+      this.selectedGame = 3;
+      menuSound.stop();
+    }
   }
 }
